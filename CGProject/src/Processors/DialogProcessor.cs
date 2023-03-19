@@ -1,6 +1,10 @@
 ﻿using Draw.src.Model;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Linq;
+using System.Windows.Controls;
 
 namespace Draw
 {
@@ -22,8 +26,8 @@ namespace Draw
         /// <summary>
         /// Избран елемент.
         /// </summary>
-        private Shape selection;
-        public Shape Selection
+        private List<Shape> selection = new List<Shape>();
+        public List<Shape> Selection
         {
             get { return selection; }
             set { selection = value; }
@@ -49,17 +53,18 @@ namespace Draw
             get { return lastLocation; }
             set { lastLocation = value; }
         }
+        
 
         #endregion
 
         /// <summary>
         /// Добавя примитив - правоъгълник на произволно място върху клиентската област.
         /// </summary>
-        public void AddRandomRectangle()
+        public void AddRandomRectangle(int heigth, int width)
         {
             Random rnd = new Random();
-            int x = rnd.Next(100, 1000);
-            int y = rnd.Next(100, 600);
+            int x = rnd.Next(50, width);
+            int y = rnd.Next(50, heigth);
 
             RectangleShape rect = new RectangleShape(new Rectangle(x, y, 100, 200));
             rect.FillColor = Color.White;
@@ -69,11 +74,11 @@ namespace Draw
         }
 
 
-        public void AddRandomTriangle()
+        public void AddRandomTriangle(int heigth, int width)
         {
             Random rnd = new Random();
-            int x = rnd.Next(100, 800);
-            int y = rnd.Next(100, 400);
+            int x = rnd.Next(50, width);
+            int y = rnd.Next(50, heigth);
 
             TriangleShape triangle = new TriangleShape(new Rectangle(x, y, 150, 150));
             triangle.FillColor = Color.White;
@@ -82,11 +87,11 @@ namespace Draw
             ShapeList.Add(triangle);
         }
 
-        public void AddRandomCircle()
+        public void AddRandomCircle(int heigth, int width)
         {
             Random rnd = new Random();
-            int x = rnd.Next(100, 800);
-            int y = rnd.Next(100, 400);
+            int x = rnd.Next(50, width);
+            int y = rnd.Next(50, heigth);
 
             CircleShape circle = new CircleShape(new Rectangle(x, y, 150, 150));
             circle.FillColor = Color.White;
@@ -95,11 +100,11 @@ namespace Draw
             ShapeList.Add(circle);
         }
 
-        public void AddRandomSquare()
+        public void AddRandomSquare(int heigth, int width)
         {
             Random rnd = new Random();
-            int x = rnd.Next(100, 800);
-            int y = rnd.Next(100, 400);
+            int x = rnd.Next(50, width);
+            int y = rnd.Next(50, heigth);
 
             RectangleShape square = new RectangleShape(new Rectangle(x, y, 150, 150));
             square.FillColor = Color.White;
@@ -108,11 +113,11 @@ namespace Draw
             ShapeList.Add(square);
         }
 
-        public void AddRandomHexagon()
+        public void AddRandomHexagon(int heigth, int width)
         {
             Random rnd = new Random();
-            int x = rnd.Next(100, 1000);
-            int y = rnd.Next(100, 600);
+            int x = rnd.Next(50, width);
+            int y = rnd.Next(50, heigth);
 
             HexagonShape hexagon = new HexagonShape(new Rectangle(x, y, 200, 180));
             hexagon.FillColor = Color.White;
@@ -147,74 +152,132 @@ namespace Draw
         /// <param name="p">Вектор на транслация.</param>
         public void TranslateTo(PointF p)
         {
-            if (selection != null)
+            if (selection.Count > 0)
             {
-                selection.Location = new PointF(
-                    selection.Location.X + p.X - lastLocation.X,
-                    selection.Location.Y + p.Y - lastLocation.Y
+                foreach (Shape item in Selection)
+                {
+                    item.Location = new PointF(
+                    item.Location.X + p.X - lastLocation.X,
+                    item.Location.Y + p.Y - lastLocation.Y
                     );
+                }
+                
                 lastLocation = p;
             }
         }
 
         public void SetStrokeColor(Color color)
         {
-            if (selection != null)
+            if (selection.Count > 0)
             {
-                selection.StrokeColor = color;
+
+                foreach (Shape shape in Selection)
+                {
+                    shape.StrokeColor = color;
+                }
+                
             }
         }
 
         public void SetFillColor(Color color)
         {
-            if (selection != null)
+            if (selection.Count > 0)
             {
-                selection.FillColor = color;
+                foreach (Shape shape in Selection)
+                {
+                    shape.FillColor = color;
+                }
+                
             }
         }
 
         public void SetStrokeWidth(int strokeWidth)
         {
-            if (selection != null)
+            if (selection.Count > 0)
             {
-                selection.StrokeWidth = strokeWidth;
+                foreach (Shape shape in Selection)
+                {
+                     shape.StrokeWidth = strokeWidth;
+                }
+               
             }
         }
 
         public void SetOpacity(int opacity)
         {
-            if (selection != null)
+            if (selection.Count > 0)
             {
-                selection.Opacity = opacity;
+                foreach (Shape shape in Selection)
+                {
+                    shape.Opacity = opacity;
+                }
+                
             }
         }
 
         public void RotatePrimitive(int angle)
         {
-            if (selection != null)
+            if (selection.Count > 0)
             {
-                Selection.TransformationMatrix.RotateAt(
+                foreach (Shape shape in Selection)
+                {
+                    shape.TransformationMatrix.RotateAt(
                     angle,
                     new PointF(
-                    Selection.Location.X + Selection.Width /2,
-                    Selection.Location.Y + Selection.Height/2
+                    shape.Location.X + shape.Width /2,
+                    shape.Location.Y + shape.Height/2
                     )
                     );
+
+                }
+                
             }
         }
 
         public void ScalePrimitive()
         {
-
-            if (selection != null)
+            if (selection.Count > 0)
             {
+                foreach (var shape in Selection)
+                {
+                    
 
-                Selection.TransformationMatrix.Scale(
-                Selection.Location.X ,
-                Selection.Location.Y
-                );
+                    PointF[] pointsOfShape = { shape.Location,
+                                               new PointF(shape.Location.X + shape.Width, shape.Location.Y),
+                                               new PointF(shape.Location.X, shape.Location.Y + shape.Height),
+                                               new PointF(shape.Location.X + shape.Width, shape.Location.Y + shape.Height + shape.Width)
+                    };
+
+                    shape.TransformationMatrix.Scale(2, 2);
+                    shape.TransformationMatrix.TransformPoints( pointsOfShape );
+
+                    Shape shape1 = shape;
+
+                    ShapeList.Add(shape1);
+
+                    //somehow need to reDraw
+
+
+                }
+
+
+                //// Get the coordinates of the graphic figure
+                //PointF[] points = { };
+
+                //// Create a new matrix and set the scaling factors
+                //Matrix scalingMatrix = new Matrix();
+                //scalingMatrix.Scale(2.0f, 2.0f); // Double the size of the figure
+
+                //// Transform the coordinates using the scaling matrix
+                //scalingMatrix.TransformPoints(points);
+
+                //// Redraw the graphic figure using the transformed coordinates
+                //RedrawFigure(points);
+
+
+
             }
-            
+
 
 
         }
@@ -223,28 +286,55 @@ namespace Draw
         {
             base.Draw(grfx);
 
-            if (selection != null)
+            if (selection.Count > 0)
             {
-                float[] dashValues = {4, 2};
+                foreach (Shape shape in Selection)
+                {
+                    float[] dashValues = {4, 2};
                 Pen dashPen = new Pen(Color.Black, 3);
                 dashPen.DashPattern = dashValues;
                 grfx.DrawRectangle(
                     dashPen,
-                    Selection.Location.X - 3, 
-                    Selection.Location.Y - 3,
-                    Selection.Width + 6 , 
-                    Selection.Height + 6 
+                    shape.Location.X - 3, 
+                    shape.Location.Y - 3,
+                    shape.Width + 6 , 
+                    shape.Height + 6 
                     );
+                }
+                
             }
         }
 
-        public void Remove(Shape shape)
+        public void RemoveFromList(Shape shape)
         {
 
             ShapeList.Remove(shape);
             shape = null;
+            
+        }
+        public void RemoveFromSelection(Shape shape)
+        {
+
+            Selection.Remove(shape);
 
         }
 
+        public void GroupPrimitives()
+        {
+            //TODO for the bounding box : 
+            //define 4 variables - minX, maxX, minY,maxY
+            //iterate the subShape
+            //find the left most primitive and store the x coord
+            //find the top most primitive and store the y coord
+            //find the top most primitive and store its right most location
+            //find the bot most primitive and store its botton most location
+            GroupShape group = new GroupShape(new RectangleF(200,300,150,200));
+          
+
+           
+            group.SubShapes = selection;
+            selection.Clear();
+
+        }
     }
 }

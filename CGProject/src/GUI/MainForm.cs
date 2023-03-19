@@ -3,8 +3,11 @@ using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using static System.Windows.Forms.DataFormats;
 
@@ -21,6 +24,7 @@ namespace Draw
         /// </summary>
         private DialogProcessor dialogProcessor = new DialogProcessor();
 
+
         public MainForm()
         {
             //
@@ -31,6 +35,7 @@ namespace Draw
             //
             // TODO: Add constructor code after the InitializeComponent() call.
             //
+
         }
 
         /// <summary>
@@ -55,7 +60,11 @@ namespace Draw
         /// </summary>
         void DrawRectangleSpeedButtonClick(object sender, EventArgs e)
         {
-            dialogProcessor.AddRandomRectangle();
+
+            int portHeigth = viewPort.Height -100;
+            int portWidth = viewPort.Width - 100;
+
+            dialogProcessor.AddRandomRectangle(portHeigth,portWidth);
 
             statusBar.Items[0].Text = "Последно действие: Рисуване на правоъгълник";
 
@@ -64,7 +73,10 @@ namespace Draw
 
         private void DrawTriangleSpeedButtonClick(object sender, EventArgs e)
         {
-            dialogProcessor.AddRandomTriangle();
+            int portHeigth = viewPort.Height - 100;
+            int portWidth = viewPort.Width - 100;
+
+            dialogProcessor.AddRandomTriangle(portHeigth, portWidth);
 
             statusBar.Items[0].Text = "Последно действие: Рисуване на триъгълник";
 
@@ -73,7 +85,10 @@ namespace Draw
 
         private void DrawCircleSpeedButtonClick(object sender, EventArgs e)
         {
-            dialogProcessor.AddRandomCircle();
+            int portHeigth = viewPort.Height - 100  ;
+            int portWidth = viewPort.Width - 100;
+
+            dialogProcessor.AddRandomCircle(portHeigth, portWidth);
 
             statusBar.Items[0].Text = "Последно действие: Рисуване на кръг";
 
@@ -82,7 +97,10 @@ namespace Draw
 
         private void DrawSquareSpeedButtonClick(object sender, EventArgs e)
         {
-            dialogProcessor.AddRandomSquare();
+            int portHeigth = viewPort.Height - 100;
+            int portWidth = viewPort.Width - 100;
+
+            dialogProcessor.AddRandomSquare(portHeigth, portWidth);
 
             statusBar.Items[0].Text = "Последно действие: Рисуване на квадрат";
 
@@ -92,7 +110,11 @@ namespace Draw
 
         private void DrawHexagonSpeedButtonClick(object sender, EventArgs e)
         {
-            dialogProcessor.AddRandomHexagon();
+
+            int portHeigth = viewPort.Height - 100;
+            int portWidth = viewPort.Width - 100;
+
+            dialogProcessor.AddRandomHexagon(portHeigth, portWidth);
 
             statusBar.Items[0].Text = "Последно действие: Рисуване на шестоъгълник";
 
@@ -111,17 +133,25 @@ namespace Draw
         {
             if (pickUpSpeedButton.Checked)
             {
-                dialogProcessor.Selection = dialogProcessor.ContainsPoint(e.Location);
-                if (dialogProcessor.Selection != null)
+                var temp = dialogProcessor.ContainsPoint(e.Location);
+
+
+                if (temp != null)
                 {
+                    if (dialogProcessor.Selection.Contains(temp))
+                    {
+                            dialogProcessor.Selection.Remove(temp);  
+                    }
+                    
+                    else{
+                        dialogProcessor.Selection.Add(temp);
+                    }
                     statusBar.Items[0].Text = "Последно действие: Селекция на примитив";
                     dialogProcessor.IsDragging = true;
-                    opacityChanger.Value = dialogProcessor.Selection.Opacity;
-                    strokeWidthUpDown.Value = dialogProcessor.Selection.StrokeWidth;
                     dialogProcessor.LastLocation = e.Location;
                     viewPort.Invalidate();
                 }
-            }
+            } 
         }
 
         /// <summary>
@@ -132,7 +162,8 @@ namespace Draw
         {
             if (dialogProcessor.IsDragging)
             {
-                if (dialogProcessor.Selection != null) statusBar.Items[0].Text = "Последно действие: Влачене";
+                if (dialogProcessor.Selection != null) 
+                    statusBar.Items[0].Text = "Последно действие: Влачене";
                 dialogProcessor.TranslateTo(e.Location);
                 viewPort.Invalidate();
             }
@@ -200,13 +231,18 @@ namespace Draw
 
         private void removeButton_Click(object sender, EventArgs e)
         {
-            if (dialogProcessor.Selection != null)
-            {
-                dialogProcessor.Remove(dialogProcessor.Selection);
-                statusBar.Items[0].Text = "Последно действие: Изтриване на примитив от платното";
+            List<Shape> shapes = dialogProcessor.Selection;
 
-                viewPort.Invalidate();
+            if (shapes.Count > 0)
+            {
+                foreach (Shape shape in shapes.ToList())
+                {
+                    dialogProcessor.RemoveFromList(shape);
+                    dialogProcessor.RemoveFromSelection(shape);
+                    statusBar.Items[0].Text = "Последно действие: Изтриване на примитив от платното";                 
+                }
             }
+            viewPort.Invalidate();
 
         }
 
@@ -277,6 +313,9 @@ namespace Draw
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
 
+            int portHeigth = viewPort.Height;
+            int portWidth = viewPort.Width;
+
 
             if (e.Control && e.KeyCode == Keys.X)
             {
@@ -294,9 +333,13 @@ namespace Draw
             {
                 var selectedShape = dialogProcessor.Selection;
 
-                if (selectedShape != null)
+                if (dialogProcessor.Selection.Count > 0)
                 {
-                    newestShape = GetObjectType(selectedShape);
+                    foreach (Shape shape in dialogProcessor.Selection)
+                    {
+                        newestShape = GetObjectType(shape);
+                    }
+
 
                     //this line guarantee us that we can have choice to copy new shapes or save the latest
                     //copiedShapes[0] = newestShape;
@@ -326,22 +369,24 @@ namespace Draw
             //adding shortcuts to my application for better UI
             if (e.Control && e.KeyValue == 49)
             {
-                dialogProcessor.AddRandomSquare();
+
+
+                dialogProcessor.AddRandomSquare(portHeigth,portWidth);
                 viewPort.Invalidate();
             }
             if (e.Control && e.KeyValue == 50)
             {
-                dialogProcessor.AddRandomRectangle();
+                dialogProcessor.AddRandomRectangle(portHeigth, portWidth);
                 viewPort.Invalidate();
             }
             if (e.Control && e.KeyValue == 51)
             {
-                dialogProcessor.AddRandomTriangle();
+                dialogProcessor.AddRandomTriangle(portHeigth, portWidth);
                 viewPort.Invalidate();
             }
             if (e.Control && e.KeyValue == 52)
             {
-                dialogProcessor.AddRandomCircle();
+                dialogProcessor.AddRandomCircle(portHeigth, portWidth);
                 viewPort.Invalidate();
             }
 
@@ -356,18 +401,33 @@ namespace Draw
 
         private void RotateButton_Click(object sender, EventArgs e)
         {
-            dialogProcessor.RotatePrimitive(30);
+            int input;
+            if (int.TryParse(Microsoft.VisualBasic.Interaction.InputBox("Please enter an integer value:", "User Input", ""), out input))
+            {
+                dialogProcessor.RotatePrimitive(input);
+                viewPort.Invalidate();
+            }
+            else
+            {
+                MessageBox.Show("Please enter a valid integer value");
+            }
 
-            viewPort.Invalidate();
+
         }
 
         private void ScaleButton_Click(object sender, EventArgs e)
         {
             dialogProcessor.ScalePrimitive();
+            
 
             viewPort.Invalidate();
         }
 
+        private void RemoveGroupSelectionBtn_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.GroupPrimitives();
+            viewPort.Invalidate();
+        }
         
     }
 }
