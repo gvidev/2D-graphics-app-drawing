@@ -359,7 +359,6 @@ namespace Draw
         }
 
 
-
         public object DeSerializeFile(string path = null)
         {
             object currentObject;

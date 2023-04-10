@@ -60,6 +60,8 @@ namespace Draw
             this.scaleButton = new System.Windows.Forms.ToolStripButton();
             this.GroupSelectionBtn = new System.Windows.Forms.ToolStripButton();
             this.RemoveGroupBtn = new System.Windows.Forms.ToolStripButton();
+            this.copyButton = new System.Windows.Forms.ToolStripButton();
+            this.pasteButton = new System.Windows.Forms.ToolStripButton();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.colorDialog2 = new System.Windows.Forms.ColorDialog();
             this.opacityChanger = new System.Windows.Forms.NumericUpDown();
@@ -208,7 +210,9 @@ namespace Draw
             this.rotateButton,
             this.scaleButton,
             this.GroupSelectionBtn,
-            this.RemoveGroupBtn});
+            this.RemoveGroupBtn,
+            this.copyButton,
+            this.pasteButton});
             this.speedMenu.Location = new System.Drawing.Point(0, 24);
             this.speedMenu.Name = "speedMenu";
             this.speedMenu.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
@@ -365,11 +369,31 @@ namespace Draw
             this.RemoveGroupBtn.Text = "Разрупиране на примитивите";
             this.RemoveGroupBtn.Click += new System.EventHandler(this.removeGroupButton_Click);
             // 
+            // copyButton
+            // 
+            this.copyButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.copyButton.Image = ((System.Drawing.Image)(resources.GetObject("copyButton.Image")));
+            this.copyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.copyButton.Name = "copyButton";
+            this.copyButton.Size = new System.Drawing.Size(24, 24);
+            this.copyButton.Text = "Копиране на селекция";
+            this.copyButton.Click += new System.EventHandler(this.copyButton_Click);
+            // 
+            // pasteButton
+            // 
+            this.pasteButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.pasteButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteButton.Image")));
+            this.pasteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.pasteButton.Name = "pasteButton";
+            this.pasteButton.Size = new System.Drawing.Size(24, 24);
+            this.pasteButton.Text = "Поставяне на копираното";
+            this.pasteButton.Click += new System.EventHandler(this.pasteButton_Click);
+            // 
             // opacityChanger
             // 
             this.opacityChanger.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.opacityChanger.Location = new System.Drawing.Point(689, 23);
+            this.opacityChanger.Location = new System.Drawing.Point(756, 24);
             this.opacityChanger.Maximum = new decimal(new int[] {
             255,
             0,
@@ -396,7 +420,7 @@ namespace Draw
             | System.Windows.Forms.AnchorStyles.Left)));
             this.opacityLabel.AutoSize = true;
             this.opacityLabel.BackColor = System.Drawing.Color.Transparent;
-            this.opacityLabel.Location = new System.Drawing.Point(586, 30);
+            this.opacityLabel.Location = new System.Drawing.Point(650, 27);
             this.opacityLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.opacityLabel.Name = "opacityLabel";
             this.opacityLabel.Size = new System.Drawing.Size(84, 13);
@@ -408,7 +432,7 @@ namespace Draw
             this.strokeWidthLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.strokeWidthLabel.AutoSize = true;
-            this.strokeWidthLabel.Location = new System.Drawing.Point(408, 30);
+            this.strokeWidthLabel.Location = new System.Drawing.Point(456, 27);
             this.strokeWidthLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.strokeWidthLabel.Name = "strokeWidthLabel";
             this.strokeWidthLabel.Size = new System.Drawing.Size(107, 13);
@@ -419,7 +443,7 @@ namespace Draw
             // 
             this.strokeWidthUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.strokeWidthUpDown.Location = new System.Drawing.Point(528, 24);
+            this.strokeWidthUpDown.Location = new System.Drawing.Point(588, 24);
             this.strokeWidthUpDown.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.strokeWidthUpDown.Maximum = new decimal(new int[] {
             50,
@@ -447,7 +471,7 @@ namespace Draw
             // 
             // searchSelectionTB
             // 
-            this.searchSelectionTB.Location = new System.Drawing.Point(784, 24);
+            this.searchSelectionTB.Location = new System.Drawing.Point(861, 24);
             this.searchSelectionTB.Name = "searchSelectionTB";
             this.searchSelectionTB.Size = new System.Drawing.Size(165, 20);
             this.searchSelectionTB.TabIndex = 10;
@@ -553,5 +577,7 @@ namespace Draw
         private System.Windows.Forms.ToolStripMenuItem exportToToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportToJPEGToolStripMenuItem;
         private System.Windows.Forms.TextBox searchSelectionTB;
+        private System.Windows.Forms.ToolStripButton copyButton;
+        private System.Windows.Forms.ToolStripButton pasteButton;
     }
 }

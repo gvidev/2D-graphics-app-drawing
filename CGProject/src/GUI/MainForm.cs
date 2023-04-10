@@ -1,5 +1,4 @@
 ﻿using Draw.src.Model;
-using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,7 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Forms;
-using static System.Windows.Forms.DataFormats;
 
 namespace Draw
 {
@@ -144,26 +142,27 @@ namespace Draw
                     {
 
                         dialogProcessor.Selection.Remove(temp);
-                    }else
+                    }
+                    else
                     {
                         dialogProcessor.Selection.Add(temp);
                     }
 
                     if (dialogProcessor.Selection.Count == 1)
                     {
-                        statusBar.Items[0].Text = "Последно действие: Селекция на примитив с име " + dialogProcessor.Selection.First().ShapeName ;
+                        statusBar.Items[0].Text = "Последно действие: Селекция на примитив с име " + dialogProcessor.Selection.First().ShapeName;
                     }
 
-                    if(dialogProcessor.Selection.Count > 1)
+                    if (dialogProcessor.Selection.Count > 1)
                     {
                         statusBar.Items[0].Text = "Последно действие: Селекция на примитиви";
                     }
-                   
+
                     dialogProcessor.IsDragging = true;
                     dialogProcessor.LastLocation = e.Location;
                     viewPort.Invalidate();
 
-                    
+
                 }
             }
         }
@@ -258,6 +257,49 @@ namespace Draw
 
         }
 
+        //should be used for copy and paste element
+        List<Shape> newestShapes = null;
+        bool copy = false;
+
+
+        private void copyButton_Click(object sender, EventArgs e)
+        {
+            var selectedShape = dialogProcessor.Selection;
+
+            if (dialogProcessor.Selection.Count > 0)
+            {
+                newestShapes = new List<Shape>();
+                foreach (Shape shape in dialogProcessor.Selection)
+                {
+                    var temp = GetObjectType(shape);
+                    newestShapes.Add(temp);
+                    copy = true;
+                    statusBar.Items[0].Text = "Последно действие: Копиране на селекцията";
+                }
+            }
+        }
+
+        private void pasteButton_Click(object sender, EventArgs e)
+        {
+            if (copy)
+            {
+                if (newestShapes.Any() && newestShapes != null)
+                {
+
+                    foreach (var item in newestShapes)
+                    {
+                        var temp = GetObjectType(item);
+                        dialogProcessor.ShapeList.Add(temp);
+                    }
+                    statusBar.Items[0].Text = "Последно действие: Поставяне на селекцията";
+                    viewPort.Invalidate();
+                    copy = false;
+
+
+                }
+            }
+        }
+
         private Shape GetObjectType(Shape selectedShape)
         {
             var type = selectedShape.GetType();
@@ -285,6 +327,7 @@ namespace Draw
                         newestShape.StrokeColor = selectedShape.StrokeColor;
                         newestShape.StrokeWidth = selectedShape.StrokeWidth;
                         newestShape.Opacity = selectedShape.Opacity;
+                        newestShape.ShapeName = "square#" + new Random().Next();
                         return newestShape;
                     }
                     else
@@ -295,6 +338,7 @@ namespace Draw
                         newestShape.StrokeColor = selectedShape.StrokeColor;
                         newestShape.StrokeWidth = selectedShape.StrokeWidth;
                         newestShape.Opacity = selectedShape.Opacity;
+                        newestShape.ShapeName = "rectangle#" + new Random().Next();
                         return newestShape;
                     }
 
@@ -305,6 +349,7 @@ namespace Draw
                     newestShape.StrokeColor = selectedShape.StrokeColor;
                     newestShape.StrokeWidth = selectedShape.StrokeWidth;
                     newestShape.Opacity = selectedShape.Opacity;
+                    newestShape.ShapeName = "circle#" + new Random().Next();
                     return newestShape;
 
                 case "TriangleShape":
@@ -314,6 +359,7 @@ namespace Draw
                     newestShape.StrokeColor = selectedShape.StrokeColor;
                     newestShape.StrokeWidth = selectedShape.StrokeWidth;
                     newestShape.Opacity = selectedShape.Opacity;
+                    newestShape.ShapeName = "triangle#" + new Random().Next();
                     return newestShape;
 
                 case "HexagonShape":
@@ -323,6 +369,7 @@ namespace Draw
                     newestShape.StrokeColor = selectedShape.StrokeColor;
                     newestShape.StrokeWidth = selectedShape.StrokeWidth;
                     newestShape.Opacity = selectedShape.Opacity;
+                    newestShape.ShapeName = "hexagon#" + new Random().Next();
                     return newestShape;
             }
             return null;
@@ -331,9 +378,7 @@ namespace Draw
 
 
 
-        //should be used for copy and paste element
-        List<Shape> newestShapes = null;
-
+        
 
         //key shortcuts
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
@@ -350,33 +395,12 @@ namespace Draw
             //CONTROL + C - COPY SELECTED
             if (e.Control && e.KeyCode == Keys.C)
             {
-                var selectedShape = dialogProcessor.Selection;
-
-                if (dialogProcessor.Selection.Count > 0)
-                {
-                    newestShapes = new List<Shape>();
-                    foreach (Shape shape in dialogProcessor.Selection)
-                    {
-                        var temp = GetObjectType(shape);
-                        newestShapes.Add(temp);
-                        statusBar.Items[0].Text = "Последно действие: Копиране на селекцията";
-                    }
-                }
+                copyButton_Click(sender,e);
             }
             //CONTROL + V - PASTE SELECTED
             if (e.Control && e.KeyCode == Keys.V)
             {
-                if (newestShapes.Any() && newestShapes!=null)
-                {
-
-                    foreach (var item in newestShapes)
-                    {
-                        var temp = GetObjectType(item);
-                        dialogProcessor.ShapeList.Add(temp);
-                    }
-                    statusBar.Items[0].Text = "Последно действие: Поставяне на селекцията";
-                    viewPort.Invalidate();
-                }
+               pasteButton_Click(sender,e);
             }
             //CONTROL + A - SELECTE ANY
             if (e.Control && e.KeyCode == Keys.A)
@@ -386,13 +410,13 @@ namespace Draw
 
                     foreach (var item in dialogProcessor.ShapeList)
                     {
-                       dialogProcessor.Selection.Add(item);
+                        dialogProcessor.Selection.Add(item);
                     }
                     statusBar.Items[0].Text = "Последно действие: Селектиране на всички фигури";
                     viewPort.Invalidate();
                 }
             }
-            
+
             //adding shortcuts to my application for better UX
             //CONTROL + 1
             if (e.Control && e.KeyValue == 49)
@@ -440,7 +464,7 @@ namespace Draw
             addForm.ShowDialog();
 
 
-            
+
 
         }
 
@@ -498,7 +522,7 @@ namespace Draw
         private void removeGroupButton_Click(object sender, EventArgs e)
         {
 
-          dialogProcessor.UngroupShapes();
+            dialogProcessor.UngroupShapes();
             statusBar.Items[0].Text = "Последно действие: Разгрупиране на селектирана група или групи";
             viewPort.Invalidate();
         }
@@ -551,7 +575,7 @@ namespace Draw
 
         private void searchSelectionTB_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter) 
+            if (e.KeyCode == Keys.Enter)
             {
                 string inputText = searchSelectionTB.Text;
                 string text = inputText.Trim();
@@ -587,6 +611,8 @@ namespace Draw
                 }
             }
         }
+
+        
     }
 }
     
