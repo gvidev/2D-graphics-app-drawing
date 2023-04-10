@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Draw.src.Model;
 using System.Linq;
 using System.Text;
-using System.Windows.Shapes;
 using static System.Windows.Forms.LinkLabel;
 
 namespace Draw.src.Model
 {
+    [Serializable]
     public class HexagonShape : Shape
     {
         public HexagonShape(RectangleF rect) : base(rect)
@@ -34,7 +35,11 @@ namespace Draw.src.Model
         /// </summary>
         public override void DrawSelf(Graphics grfx)
         {
+            
             base.DrawSelf(grfx);
+
+            base.Rotate(grfx);
+            base.Scaling(grfx);
             //point A
             float x_left = Rectangle.X;
             float y_left = Rectangle.Y + Rectangle.Height / 2;
@@ -89,11 +94,12 @@ namespace Draw.src.Model
                 FillColor.B
                 );
 
-            grfx.Transform = TransformationMatrix;
+           // grfx.Transform = TransformationMatrix;
 
             grfx.FillPolygon(new SolidBrush(FillColor), hexagon);
             grfx.DrawPolygon(new Pen(StrokeColor, StrokeWidth), hexagon);
 
+            grfx.ResetTransform();
         }
 
 

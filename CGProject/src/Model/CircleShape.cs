@@ -6,6 +6,7 @@ using System.Text;
 
 namespace Draw.src.Model
 {
+    [Serializable]
     public class CircleShape : Shape
     {
         
@@ -41,8 +42,11 @@ namespace Draw.src.Model
         /// </summary>
         public override void DrawSelf(Graphics grfx)
         {
+          
             base.DrawSelf(grfx);
 
+            base.Rotate(grfx);
+            base.Scaling(grfx);
             FillColor = Color.FromArgb
                 (
                 Opacity,
@@ -51,16 +55,17 @@ namespace Draw.src.Model
                 FillColor.B
                 );
 
-            var state = grfx.Save();
+           // var state = grfx.Save();
 
             
-            grfx.Transform = TransformationMatrix;
+           // grfx.Transform = TransformationMatrix;
 
             grfx.FillEllipse(new SolidBrush(FillColor), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
             grfx.DrawEllipse(new Pen(StrokeColor, StrokeWidth), Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
 
 
-            grfx.Restore(state);
+          //  grfx.Restore(state);
+            grfx.ResetTransform();
         }
 
         //x1,y1 are used for point cordinates

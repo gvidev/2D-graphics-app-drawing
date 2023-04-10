@@ -3,6 +3,7 @@ using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.Globalization;
 using System.IO;
@@ -61,12 +62,12 @@ namespace Draw
         void DrawRectangleSpeedButtonClick(object sender, EventArgs e)
         {
 
-            int portHeigth = viewPort.Height -100;
+            int portHeigth = viewPort.Height - 100;
             int portWidth = viewPort.Width - 100;
 
-            dialogProcessor.AddRandomRectangle(portHeigth,portWidth);
+            dialogProcessor.AddRandomRectangle(portHeigth, portWidth);
 
-            statusBar.Items[0].Text = "Последно действие: Рисуване на правоъгълник";
+            statusBar.Items[0].Text = "Последно действие: Рисуване на правоъгълник на произволно място на платното";
 
             viewPort.Invalidate();
         }
@@ -78,19 +79,19 @@ namespace Draw
 
             dialogProcessor.AddRandomTriangle(portHeigth, portWidth);
 
-            statusBar.Items[0].Text = "Последно действие: Рисуване на триъгълник";
+            statusBar.Items[0].Text = "Последно действие: Рисуване на триъгълник на произволно място на платното";
 
             viewPort.Invalidate();
         }
 
         private void DrawCircleSpeedButtonClick(object sender, EventArgs e)
         {
-            int portHeigth = viewPort.Height - 100  ;
+            int portHeigth = viewPort.Height - 100;
             int portWidth = viewPort.Width - 100;
 
             dialogProcessor.AddRandomCircle(portHeigth, portWidth);
 
-            statusBar.Items[0].Text = "Последно действие: Рисуване на кръг";
+            statusBar.Items[0].Text = "Последно действие: Рисуване на кръг на произволно място на платното";
 
             viewPort.Invalidate();
         }
@@ -102,7 +103,7 @@ namespace Draw
 
             dialogProcessor.AddRandomSquare(portHeigth, portWidth);
 
-            statusBar.Items[0].Text = "Последно действие: Рисуване на квадрат";
+            statusBar.Items[0].Text = "Последно действие: Рисуване на квадрат на произволно място на платното";
 
             viewPort.Invalidate();
 
@@ -116,7 +117,7 @@ namespace Draw
 
             dialogProcessor.AddRandomHexagon(portHeigth, portWidth);
 
-            statusBar.Items[0].Text = "Последно действие: Рисуване на шестоъгълник";
+            statusBar.Items[0].Text = "Последно действие: Рисуване на шестоъгълник на произволно място на платното";
 
             viewPort.Invalidate();
 
@@ -138,12 +139,15 @@ namespace Draw
 
                 if (temp != null)
                 {
+
                     if (dialogProcessor.Selection.Contains(temp))
                     {
-                            dialogProcessor.Selection.Remove(temp);  
+
+                        dialogProcessor.Selection.Remove(temp);
                     }
-                    
-                    else{
+
+                    else
+                    {
                         dialogProcessor.Selection.Add(temp);
                     }
                     statusBar.Items[0].Text = "Последно действие: Селекция на примитив";
@@ -151,7 +155,7 @@ namespace Draw
                     dialogProcessor.LastLocation = e.Location;
                     viewPort.Invalidate();
                 }
-            } 
+            }
         }
 
         /// <summary>
@@ -162,7 +166,8 @@ namespace Draw
         {
             if (dialogProcessor.IsDragging)
             {
-                if (dialogProcessor.Selection != null) 
+
+                if (dialogProcessor.Selection != null)
                     statusBar.Items[0].Text = "Последно действие: Влачене";
                 dialogProcessor.TranslateTo(e.Location);
                 viewPort.Invalidate();
@@ -184,6 +189,7 @@ namespace Draw
             if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
                 dialogProcessor.SetStrokeColor(colorDialog1.Color);
+                statusBar.Items[0].Text = "Последно действие: Смяна на цвят на контура";
                 viewPort.Invalidate();
             }
 
@@ -195,6 +201,7 @@ namespace Draw
             if (colorDialog2.ShowDialog() == DialogResult.OK)
             {
                 dialogProcessor.SetFillColor(colorDialog2.Color);
+                statusBar.Items[0].Text = "Последно действие: Смяна на цвят на фигурата";
                 viewPort.Invalidate();
             }
         }
@@ -222,11 +229,6 @@ namespace Draw
 
                 viewPort.Invalidate();
             }
-            else
-            {
-                MessageBox.Show("Please select item and try again!", "Not selected item",
-                          MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private void removeButton_Click(object sender, EventArgs e)
@@ -239,7 +241,7 @@ namespace Draw
                 {
                     dialogProcessor.RemoveFromList(shape);
                     dialogProcessor.RemoveFromSelection(shape);
-                    statusBar.Items[0].Text = "Последно действие: Изтриване на примитив от платното";                 
+                    statusBar.Items[0].Text = "Последно действие: Изтриване на примитив от платното";
                 }
             }
             viewPort.Invalidate();
@@ -258,6 +260,9 @@ namespace Draw
 
             Rectangle squareCanvas
                 = new Rectangle((int)selectedShape.Location.X + 5, (int)selectedShape.Location.Y + 5, 150, 150);
+
+            Rectangle hexagonCanvas
+                = new Rectangle((int)selectedShape.Location.X + 5, (int)selectedShape.Location.Y + 5, 200, 180);
 
             switch (typeName)
             {
@@ -300,35 +305,39 @@ namespace Draw
                     newestShape.StrokeWidth = selectedShape.StrokeWidth;
                     newestShape.Opacity = selectedShape.Opacity;
                     return newestShape;
+
+                case "HexagonShape":
+                    newestShape =
+                            new HexagonShape(hexagonCanvas);
+                    newestShape.FillColor = selectedShape.FillColor;
+                    newestShape.StrokeColor = selectedShape.StrokeColor;
+                    newestShape.StrokeWidth = selectedShape.StrokeWidth;
+                    newestShape.Opacity = selectedShape.Opacity;
+                    return newestShape;
             }
             return null;
         }
 
 
 
-        //should be used for copy and paste element
-        Shape newestShape;
-        //Shape copiedShape;
 
+        //should be used for copy and paste element
+        List<Shape> newestShapes = new List<Shape>();
+
+
+        //key shortcuts
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
 
             int portHeigth = viewPort.Height;
             int portWidth = viewPort.Width;
 
-
+            
             if (e.Control && e.KeyCode == Keys.X)
             {
-                //if (dialogProcessor.Selection != null)
-                //{
-                //    dialogProcessor.Remove(dialogProcessor.Selection);
-                //    statusBar.Items[0].Text = "Последно действие: Изтриване на примитив от платното";
-                //    viewPort.Invalidate();
-                //}
-
                 removeButton_Click(sender, e);
             }
-
+            //
             if (e.Control && e.KeyCode == Keys.C)
             {
                 var selectedShape = dialogProcessor.Selection;
@@ -337,56 +346,62 @@ namespace Draw
                 {
                     foreach (Shape shape in dialogProcessor.Selection)
                     {
-                        newestShape = GetObjectType(shape);
+                        var temp = GetObjectType(shape);
+                        newestShapes.Add(temp);
+                        statusBar.Items[0].Text = "Последно действие: Копиране на селекцията";
                     }
-
-
-                    //this line guarantee us that we can have choice to copy new shapes or save the latest
-                    //copiedShapes[0] = newestShape;
-
-
-                    //all above is not necesery
-                    //no maybe not
-                    // newestShape = selectedShape;
                 }
-
             }
-
+            //
             if (e.Control && e.KeyCode == Keys.V)
             {
-                if (newestShape != null)
+                if (newestShapes.Any())
                 {
-                    var temp = GetObjectType(newestShape);
-                    //newestShape = copiedShapes[0];
-                    dialogProcessor.ShapeList.Add(temp);
-                    viewPort.Invalidate();
 
-                    //there cannot be set to null because we want to have multiply copies of this shape
-                    //copiedShapes[0]=null;
+                    foreach (var item in newestShapes)
+                    {
+                        var temp = GetObjectType(item);
+                        dialogProcessor.ShapeList.Add(temp);
+                    }
+                    statusBar.Items[0].Text = "Последно действие: Поставяне на селекцията";
+                    viewPort.Invalidate();
                 }
             }
 
-            //adding shortcuts to my application for better UI
+            //adding shortcuts to my application for better UX
+            //CONTROL + 1
             if (e.Control && e.KeyValue == 49)
             {
-
-
-                dialogProcessor.AddRandomSquare(portHeigth,portWidth);
+                dialogProcessor.AddRandomSquare(portHeigth, portWidth);
+                statusBar.Items[0].Text = "Последно действие: Рисуване на квадрат на произволно място на платното";
                 viewPort.Invalidate();
             }
+            //CONTROL + 2
             if (e.Control && e.KeyValue == 50)
             {
                 dialogProcessor.AddRandomRectangle(portHeigth, portWidth);
+                statusBar.Items[0].Text = "Последно действие: Рисуване на правоъгълник на произволно място на платното";
                 viewPort.Invalidate();
             }
+            //CONTROL + 3
             if (e.Control && e.KeyValue == 51)
             {
                 dialogProcessor.AddRandomTriangle(portHeigth, portWidth);
+                statusBar.Items[0].Text = "Последно действие:  Рисуване на триъгълник на произволно място на платното";
                 viewPort.Invalidate();
             }
+            //CONTROL + 4
             if (e.Control && e.KeyValue == 52)
             {
                 dialogProcessor.AddRandomCircle(portHeigth, portWidth);
+                statusBar.Items[0].Text = "Последно действие: Рисуване на кръг на произволно място на платното";
+                viewPort.Invalidate();
+            }
+            //CONTROL + 5
+            if (e.Control && e.KeyValue == 53)
+            {
+                dialogProcessor.AddRandomHexagon(portHeigth, portWidth);
+                statusBar.Items[0].Text = "Последно действие: Рисуване на шестоъгълник на произволно място на платното";
                 viewPort.Invalidate();
             }
 
@@ -396,38 +411,120 @@ namespace Draw
         //need to be implemented
         private void AddShapeButton_Click(object sender, EventArgs e)
         {
+            Form addForm = new Form();
+            addForm.ShowDialog();
+
+
+            
 
         }
 
         private void RotateButton_Click(object sender, EventArgs e)
         {
-            int input;
-            if (int.TryParse(Microsoft.VisualBasic.Interaction.InputBox("Please enter an integer value:", "User Input", ""), out input))
-            {
-                dialogProcessor.RotatePrimitive(input);
-                viewPort.Invalidate();
-            }
-            else
-            {
-                MessageBox.Show("Please enter a valid integer value");
-            }
+
+            dialogProcessor.RotatePrimitive(45);
+            statusBar.Items[0].Text = "Последно действие: Ротация на селектираните елементи на 45 градуса";
+            viewPort.Invalidate();
 
 
         }
 
         private void ScaleButton_Click(object sender, EventArgs e)
         {
-            dialogProcessor.ScalePrimitive();
-            
-
+            dialogProcessor.ScalePrimitive(1.1f);
+            statusBar.Items[0].Text = "Последно действие: Промяна на размера на фигурата";
             viewPort.Invalidate();
         }
 
-        private void RemoveGroupSelectionBtn_Click(object sender, EventArgs e)
+        private void GroupSelectionBtn_Click(object sender, EventArgs e)
         {
             dialogProcessor.GroupPrimitives();
+            statusBar.Items[0].Text = "Последно действие: Групиране на селектирани фигури";
             viewPort.Invalidate();
         }
-        
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "GVG File|*.gvg";
+            saveFileDialog.Title = "Save a File";
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                dialogProcessor.SerializeFile(dialogProcessor.ShapeList, saveFileDialog.FileName);
+            }
+            statusBar.Items[0].Text = "Последно действие: Записване на файл.";
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "GVG FILE|*.gvg";
+            openFileDialog.Title = "Open a File";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                dialogProcessor.ShapeList = (List<Shape>)dialogProcessor.DeSerializeFile(openFileDialog.FileName);
+            }
+            statusBar.Items[0].Text = "Последно действие: Отваряне на файл";
+            viewPort.Invalidate();
+        }
+
+        private void removeGroupButton_Click(object sender, EventArgs e)
+        {
+
+          dialogProcessor.UngroupShapes();
+            statusBar.Items[0].Text = "Последно действие: Разгрупиране на селектирана група или групи";
+            viewPort.Invalidate();
+        }
+
+        private void exportToPngToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            // Create a new SaveFileDialog object
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "PNG Image|*.png";
+            saveFileDialog.Title = "Save an Image File";
+
+            // If the user clicked the OK button
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                // Create a new bitmap with the size of the control
+                Bitmap bitmap = new Bitmap(viewPort.Width, viewPort.Height);
+
+                // Draw the contents of the control to the bitmap
+                viewPort.DrawToBitmap(bitmap, new Rectangle(Point.Empty, viewPort.Size));
+
+
+                bitmap.Save(saveFileDialog.FileName, ImageFormat.Png);
+                statusBar.Items[0].Text = "Последно действие: Записване на изображение от платното в PNG формат";
+            }
+        }
+
+        private void exportToJPEGToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Create a new SaveFileDialog object
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = " JPEG Image| *.jpeg";
+            saveFileDialog.Title = "Save an Image File";
+
+            // If the user clicked the OK button
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                // Create a new bitmap with the size of the control
+                Bitmap bitmap = new Bitmap(viewPort.Width, viewPort.Height);
+
+                // Draw the contents of the control to the bitmap
+                viewPort.DrawToBitmap(bitmap, new Rectangle(Point.Empty, viewPort.Size));
+
+
+                bitmap.Save(saveFileDialog.FileName, ImageFormat.Jpeg);
+                statusBar.Items[0].Text = "Последно действие: Записване на изображение от платното в JPEG формат";
+            }
+        }
+
     }
 }
+    
+
+

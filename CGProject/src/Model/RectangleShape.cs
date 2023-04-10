@@ -6,6 +6,7 @@ namespace Draw
 	/// <summary>
 	/// Класът правоъгълник е основен примитив, който е наследник на базовия Shape.
 	/// </summary>
+	[Serializable]
 	public class RectangleShape : Shape
 	{
 		#region Constructor
@@ -43,8 +44,12 @@ namespace Draw
 		/// </summary>
 		public override void DrawSelf(Graphics grfx)
 		{
+			
+
 			base.DrawSelf(grfx);
-			FillColor = Color.FromArgb
+            base.Rotate(grfx);
+			base.Scaling(grfx);
+            FillColor = Color.FromArgb
                 (
                 Opacity,
                 FillColor.R,
@@ -52,11 +57,12 @@ namespace Draw
                 FillColor.B
                 );
 
-            grfx.Transform = TransformationMatrix;
+           // grfx.Transform = TransformationMatrix;
 
+			
             grfx.FillRectangle(new SolidBrush(FillColor),Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
 			grfx.DrawRectangle(new Pen(StrokeColor,StrokeWidth),Rectangle.X, Rectangle.Y, Rectangle.Width, Rectangle.Height);
-			
-		}
+			grfx.ResetTransform();
+        }
 	}
 }

@@ -7,6 +7,7 @@ using System.Text;
 
 namespace Draw.src.Model
 {
+    [Serializable]
     public class TriangleShape : Shape
     {
 
@@ -65,7 +66,10 @@ namespace Draw.src.Model
             float x_right = Rectangle.X + Rectangle.Width;
             float y_right = Rectangle.Y + Rectangle.Height;
 
+           
             base.DrawSelf(grfx);
+            base.Rotate(grfx);
+            base.Scaling(grfx);
             PointF[] points = new PointF[3];
             //PointF A = new PointF(x1, y1);
             //PointF B = new PointF(x2, y2);
@@ -87,10 +91,12 @@ namespace Draw.src.Model
                 FillColor.B
                 );
 
-            grfx.Transform = TransformationMatrix;
+            //grfx.Transform = TransformationMatrix;
 
             grfx.FillPolygon(new SolidBrush(FillColor), points);
             grfx.DrawPolygon(new Pen(StrokeColor, StrokeWidth), points);
+
+            grfx.ResetTransform();
         }
 
         private double AreaOfTriangle(float x1, float y1, float x2, float y2, float x3, float y3)

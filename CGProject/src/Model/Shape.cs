@@ -4,11 +4,12 @@ using System.Drawing.Drawing2D;
 
 namespace Draw
 {
-	/// <summary>
-	/// Базовия клас на примитивите, който съдържа общите характеристики на примитивите.
-	/// </summary>
-	public abstract class Shape
-	{
+    /// <summary>
+    /// Базовия клас на примитивите, който съдържа общите характеристики на примитивите.
+    /// </summary>
+	 [Serializable]
+    public abstract class Shape
+    {
 		#region Constructors
 		
 		public Shape()
@@ -97,11 +98,30 @@ namespace Draw
             set { opacity = value; }
         }
 
-		private Matrix transformationMatrix =new Matrix();
-        public Matrix TransformationMatrix
+		//private Matrix transformationMatrix =new Matrix();
+  //      public virtual Matrix TransformationMatrix
+  //      {
+  //          get { return transformationMatrix; }
+  //          set { transformationMatrix = value; }
+  //      }
+
+        private float rotateAngle;
+
+        public virtual float RotateAngle
         {
-            get { return transformationMatrix; }
-            set { transformationMatrix = value; }
+            get { return rotateAngle; }
+			set { rotateAngle = value; }
+
+        }
+
+
+        private float scale = 1;
+
+        public virtual float Scale
+        {
+            get { return scale; }
+            set { scale = value; }
+
         }
 
         #endregion
@@ -117,6 +137,24 @@ namespace Draw
 		{
 			return Rectangle.Contains(point.X, point.Y);
 		}
+
+        public virtual void Rotate(Graphics grfx)
+        {
+			grfx.TranslateTransform(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 2 );
+			
+			grfx.RotateTransform(RotateAngle);
+
+			grfx.TranslateTransform(-(Rectangle.X + Rectangle.Width / 2 ), - (Rectangle.Y + Rectangle.Height /2));
+        }
+
+		public virtual void Scaling(Graphics grfx)
+		{
+            grfx.TranslateTransform(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 2);
+
+            grfx.ScaleTransform(scale,scale);
+
+            grfx.TranslateTransform(-(Rectangle.X + Rectangle.Width / 2), -(Rectangle.Y + Rectangle.Height / 2));
+        }
 		
 		/// <summary>
 		/// Визуализира елемента.

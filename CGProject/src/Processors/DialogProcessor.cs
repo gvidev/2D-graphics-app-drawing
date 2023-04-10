@@ -3,7 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 using System.Windows.Controls;
 
 namespace Draw
@@ -33,6 +36,13 @@ namespace Draw
             set { selection = value; }
         }
 
+        private List<GroupShape> groupShapes = new List<GroupShape>();
+        public List<GroupShape> GroupShapes
+        {
+            get { return groupShapes; }
+            set { groupShapes = value; }
+        }
+
         /// <summary>
         /// Дали в момента диалога е в състояние на "влачене" на избрания елемент.
         /// </summary>
@@ -53,7 +63,7 @@ namespace Draw
             get { return lastLocation; }
             set { lastLocation = value; }
         }
-        
+
 
         #endregion
 
@@ -152,7 +162,7 @@ namespace Draw
         /// <param name="p">Вектор на транслация.</param>
         public void TranslateTo(PointF p)
         {
-            if (selection.Count > 0)
+            if (selection.Any())
             {
                 foreach (Shape item in Selection)
                 {
@@ -161,21 +171,20 @@ namespace Draw
                     item.Location.Y + p.Y - lastLocation.Y
                     );
                 }
-                
-                lastLocation = p;
             }
+            lastLocation = p;
         }
 
         public void SetStrokeColor(Color color)
         {
-            if (selection.Count > 0)
+            if (selection.Any())
             {
 
                 foreach (Shape shape in Selection)
                 {
                     shape.StrokeColor = color;
                 }
-                
+
             }
         }
 
@@ -187,7 +196,7 @@ namespace Draw
                 {
                     shape.FillColor = color;
                 }
-                
+
             }
         }
 
@@ -197,9 +206,9 @@ namespace Draw
             {
                 foreach (Shape shape in Selection)
                 {
-                     shape.StrokeWidth = strokeWidth;
+                    shape.StrokeWidth = strokeWidth;
                 }
-               
+
             }
         }
 
@@ -211,71 +220,30 @@ namespace Draw
                 {
                     shape.Opacity = opacity;
                 }
-                
+
             }
         }
 
-        public void RotatePrimitive(int angle)
+        public void RotatePrimitive(float angle)
         {
-            if (selection.Count > 0)
+            if (selection.Any())
             {
-                foreach (Shape shape in Selection)
+                foreach (var item in Selection)
                 {
-                    shape.TransformationMatrix.RotateAt(
-                    angle,
-                    new PointF(
-                    shape.Location.X + shape.Width /2,
-                    shape.Location.Y + shape.Height/2
-                    )
-                    );
+                    item.RotateAngle += angle;
 
                 }
-                
             }
         }
 
-        public void ScalePrimitive()
+        public void ScalePrimitive(float scale)
         {
             if (selection.Count > 0)
             {
                 foreach (var shape in Selection)
                 {
-                    
-
-                    PointF[] pointsOfShape = { shape.Location,
-                                               new PointF(shape.Location.X + shape.Width, shape.Location.Y),
-                                               new PointF(shape.Location.X, shape.Location.Y + shape.Height),
-                                               new PointF(shape.Location.X + shape.Width, shape.Location.Y + shape.Height + shape.Width)
-                    };
-
-                    shape.TransformationMatrix.Scale(2, 2);
-                    shape.TransformationMatrix.TransformPoints( pointsOfShape );
-
-                    Shape shape1 = shape;
-
-                    ShapeList.Add(shape1);
-
-                    //somehow need to reDraw
-
-
+                    shape.Scale *= scale;
                 }
-
-
-                //// Get the coordinates of the graphic figure
-                //PointF[] points = { };
-
-                //// Create a new matrix and set the scaling factors
-                //Matrix scalingMatrix = new Matrix();
-                //scalingMatrix.Scale(2.0f, 2.0f); // Double the size of the figure
-
-                //// Transform the coordinates using the scaling matrix
-                //scalingMatrix.TransformPoints(points);
-
-                //// Redraw the graphic figure using the transformed coordinates
-                //RedrawFigure(points);
-
-
-
             }
 
 
@@ -286,22 +254,29 @@ namespace Draw
         {
             base.Draw(grfx);
 
-            if (selection.Count > 0)
+            if (selection != null)
             {
+
+               // GraphicsState g;
                 foreach (Shape shape in Selection)
                 {
-                    float[] dashValues = {4, 2};
-                Pen dashPen = new Pen(Color.Black, 3);
-                dashPen.DashPattern = dashValues;
-                grfx.DrawRectangle(
-                    dashPen,
-                    shape.Location.X - 3, 
-                    shape.Location.Y - 3,
-                    shape.Width + 6 , 
-                    shape.Height + 6 
-                    );
+                  //  g = grfx.Save();
+                   // shape.TransformationMatrix.Multiply(grfx.Transform);
+                    float[] dashValues = { 4, 2 };
+                    Pen dashPen = new Pen(Color.Black, 3);
+                    //grfx.Transform = shape.TransformationMatrix;
+                    dashPen.DashPattern = dashValues;
+                    grfx.DrawRectangle(
+                        dashPen,
+                        shape.Location.X -10 ,
+                        shape.Location.Y - 10,
+                        shape.Width + 20,
+                        shape.Height + 20
+                        );
+
+                  //  grfx.Restore(g);
                 }
-                
+
             }
         }
 
@@ -310,31 +285,103 @@ namespace Draw
 
             ShapeList.Remove(shape);
             shape = null;
-            
+
         }
         public void RemoveFromSelection(Shape shape)
         {
-
             Selection.Remove(shape);
-
         }
+
 
         public void GroupPrimitives()
         {
-            //TODO for the bounding box : 
-            //define 4 variables - minX, maxX, minY,maxY
-            //iterate the subShape
-            //find the left most primitive and store the x coord
-            //find the top most primitive and store the y coord
-            //find the top most primitive and store its right most location
-            //find the bot most primitive and store its botton most location
-            GroupShape group = new GroupShape(new RectangleF(200,300,150,200));
-          
+            if (Selection.Count < 2) return;
 
-           
-            group.SubShapes = selection;
-            selection.Clear();
+            float minX = float.MaxValue;
+            float minY = float.MaxValue;
+            float maxX = float.MinValue;
+            float maxY = float.MinValue;
 
+            foreach (Shape item in Selection)
+            {
+                if (minX > item.Location.X) minX = item.Location.X;
+                if (minY > item.Location.Y) minY = item.Location.Y;
+                if (maxX < item.Location.X + item.Width) maxX = item.Location.X + item.Width;
+                if (maxY < item.Location.Y + item.Height) maxY = item.Location.Y + item.Height;
+
+            }
+
+            GroupShape group = new GroupShape(new RectangleF(minX, minY, maxX - minX, maxY - minY));
+            groupShapes.Add(group);
+            group.SubShapes = Selection;
+            Selection = new List<Shape> { group};
+
+            foreach (Shape item in group.SubShapes)
+            {
+                ShapeList.Remove(item);
+            }
+
+            ShapeList.Add(group);
+
+        }
+
+
+        public void UngroupShapes()
+        {
+            // Check if there is only one selected shape, and it is a group
+            if (Selection.Count == 1 && Selection[0] is GroupShape group)
+            {
+                // Get the subshapes from the group
+                List<Shape> subShapes = group.SubShapes;
+
+                // Remove the group from the groupShapes list and the ShapeList
+                groupShapes.Remove(group);
+                ShapeList.Remove(group);
+
+                // Add the subshapes back to the ShapeList
+                ShapeList.AddRange(subShapes);
+
+                // Clear the selection and add the subshapes to the selection
+                Selection.Clear();
+                Selection.AddRange(subShapes);
+            }
+        }
+
+
+
+        public object DeSerializeFile(string path = null)
+        {
+            object currentObject;
+            Stream stream;
+            IFormatter formatter = new BinaryFormatter();
+            if (path == null)
+            {
+                stream = new FileStream("DrawFile.gvg", FileMode.Open);
+            }
+            else
+            {
+                stream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.None);
+            }
+            currentObject = formatter.Deserialize(stream);
+            stream.Close();
+            return currentObject;
+        }
+
+        public void SerializeFile(object currentObject, string path = null)
+        {
+            Stream stream;
+            IFormatter binaryFormatter = new BinaryFormatter();
+            if (path == null)
+            {
+                stream = new FileStream("WinFormFile.gvg", FileMode.Create, FileAccess.Write, FileShare.None);
+            }
+            else
+            {
+                string preparePath = path + ".gvg";
+                stream = new FileStream(preparePath, FileMode.Create);
+            }
+            binaryFormatter.Serialize(stream, currentObject);
+            stream.Close();
         }
     }
 }
