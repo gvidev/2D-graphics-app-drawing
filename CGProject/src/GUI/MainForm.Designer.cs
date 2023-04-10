@@ -1,4 +1,6 @@
-﻿namespace Draw
+﻿using System.Windows.Forms.VisualStyles;
+
+namespace Draw
 {
 	partial class MainForm
 	{
@@ -67,6 +69,7 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.searchSelectionTB = new System.Windows.Forms.TextBox();
             this.doubleBufferedPanel1 = new Draw.DoubleBufferedPanel();
             this.viewPort = new Draw.DoubleBufferedPanel();
             this.mainMenu.SuspendLayout();
@@ -366,7 +369,7 @@
             // 
             this.opacityChanger.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.opacityChanger.Location = new System.Drawing.Point(720, 28);
+            this.opacityChanger.Location = new System.Drawing.Point(689, 23);
             this.opacityChanger.Maximum = new decimal(new int[] {
             255,
             0,
@@ -416,7 +419,7 @@
             // 
             this.strokeWidthUpDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.strokeWidthUpDown.Location = new System.Drawing.Point(535, 24);
+            this.strokeWidthUpDown.Location = new System.Drawing.Point(528, 24);
             this.strokeWidthUpDown.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.strokeWidthUpDown.Maximum = new decimal(new int[] {
             50,
@@ -441,6 +444,14 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // searchSelectionTB
+            // 
+            this.searchSelectionTB.Location = new System.Drawing.Point(784, 24);
+            this.searchSelectionTB.Name = "searchSelectionTB";
+            this.searchSelectionTB.Size = new System.Drawing.Size(165, 20);
+            this.searchSelectionTB.TabIndex = 10;
+            this.searchSelectionTB.KeyDown += new System.Windows.Forms.KeyEventHandler(this.searchSelectionTB_KeyDown);
             // 
             // doubleBufferedPanel1
             // 
@@ -470,6 +481,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1091, 672);
+            this.Controls.Add(this.searchSelectionTB);
             this.Controls.Add(this.doubleBufferedPanel1);
             this.Controls.Add(this.strokeWidthUpDown);
             this.Controls.Add(this.strokeWidthLabel);
@@ -540,5 +552,6 @@
         private System.Windows.Forms.ToolStripButton RemoveGroupBtn;
         private System.Windows.Forms.ToolStripMenuItem exportToToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exportToJPEGToolStripMenuItem;
+        private System.Windows.Forms.TextBox searchSelectionTB;
     }
 }

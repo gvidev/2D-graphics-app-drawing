@@ -79,6 +79,8 @@ namespace Draw
             RectangleShape rect = new RectangleShape(new Rectangle(x, y, 100, 200));
             rect.FillColor = Color.White;
             rect.StrokeColor = Color.Black;
+            //just a random number that have so small probabillity to be same twice in our program
+            rect.ShapeName = "rectangle#" + new Random().Next();
 
             ShapeList.Add(rect);
         }
@@ -93,6 +95,8 @@ namespace Draw
             TriangleShape triangle = new TriangleShape(new Rectangle(x, y, 150, 150));
             triangle.FillColor = Color.White;
             triangle.StrokeColor = Color.Black;
+            //just a random number that have so small probabillity to be same twice in our program
+            triangle.ShapeName = "triangle#" + new Random().Next();
 
             ShapeList.Add(triangle);
         }
@@ -106,6 +110,8 @@ namespace Draw
             CircleShape circle = new CircleShape(new Rectangle(x, y, 150, 150));
             circle.FillColor = Color.White;
             circle.StrokeColor = Color.Black;
+            //just a random number that have so small probabillity to be same twice in our program
+            circle.ShapeName = "circle#" + new Random().Next();
 
             ShapeList.Add(circle);
         }
@@ -119,6 +125,8 @@ namespace Draw
             RectangleShape square = new RectangleShape(new Rectangle(x, y, 150, 150));
             square.FillColor = Color.White;
             square.StrokeColor = Color.Black;
+            //just a random number that have so small probabillity to be same twice in our program
+            square.ShapeName = "square#" + new Random().Next();
 
             ShapeList.Add(square);
         }
@@ -132,6 +140,8 @@ namespace Draw
             HexagonShape hexagon = new HexagonShape(new Rectangle(x, y, 200, 180));
             hexagon.FillColor = Color.White;
             hexagon.StrokeColor = Color.Black;
+            //just a random number that have so small probabillity to be same twice in our program
+            hexagon.ShapeName = "hexagon#" + new Random().Next();
 
             ShapeList.Add(hexagon);
         }
@@ -321,6 +331,7 @@ namespace Draw
                 ShapeList.Remove(item);
             }
 
+            group.ShapeName = "group#" + new Random().Next();
             ShapeList.Add(group);
 
         }

@@ -45,6 +45,7 @@ namespace Draw.src.Model
             }
         }
 
+
         public override Color FillColor
         {
             get => base.FillColor;

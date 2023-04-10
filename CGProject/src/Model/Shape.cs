@@ -83,6 +83,13 @@ namespace Draw
             set { strokeColor = value; }
         }
 
+        private string shapeName;
+        public virtual string ShapeName
+        {
+            get { return shapeName; }
+            set { shapeName = value; }
+        }
+
         private int strokeWidth = 1;
         public virtual int StrokeWidth
         {

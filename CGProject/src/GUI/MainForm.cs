@@ -144,16 +144,26 @@ namespace Draw
                     {
 
                         dialogProcessor.Selection.Remove(temp);
-                    }
-
-                    else
+                    }else
                     {
                         dialogProcessor.Selection.Add(temp);
                     }
-                    statusBar.Items[0].Text = "Последно действие: Селекция на примитив";
+
+                    if (dialogProcessor.Selection.Count == 1)
+                    {
+                        statusBar.Items[0].Text = "Последно действие: Селекция на примитив с име " + dialogProcessor.Selection.First().ShapeName ;
+                    }
+
+                    if(dialogProcessor.Selection.Count > 1)
+                    {
+                        statusBar.Items[0].Text = "Последно действие: Селекция на примитиви";
+                    }
+                   
                     dialogProcessor.IsDragging = true;
                     dialogProcessor.LastLocation = e.Location;
                     viewPort.Invalidate();
+
+                    
                 }
             }
         }
@@ -322,7 +332,7 @@ namespace Draw
 
 
         //should be used for copy and paste element
-        List<Shape> newestShapes = new List<Shape>();
+        List<Shape> newestShapes = null;
 
 
         //key shortcuts
@@ -332,18 +342,19 @@ namespace Draw
             int portHeigth = viewPort.Height;
             int portWidth = viewPort.Width;
 
-            
+            //CONTROL + X - DELETE SELECTED
             if (e.Control && e.KeyCode == Keys.X)
             {
                 removeButton_Click(sender, e);
             }
-            //
+            //CONTROL + C - COPY SELECTED
             if (e.Control && e.KeyCode == Keys.C)
             {
                 var selectedShape = dialogProcessor.Selection;
 
                 if (dialogProcessor.Selection.Count > 0)
                 {
+                    newestShapes = new List<Shape>();
                     foreach (Shape shape in dialogProcessor.Selection)
                     {
                         var temp = GetObjectType(shape);
@@ -352,10 +363,10 @@ namespace Draw
                     }
                 }
             }
-            //
+            //CONTROL + V - PASTE SELECTED
             if (e.Control && e.KeyCode == Keys.V)
             {
-                if (newestShapes.Any())
+                if (newestShapes.Any() && newestShapes!=null)
                 {
 
                     foreach (var item in newestShapes)
@@ -367,7 +378,21 @@ namespace Draw
                     viewPort.Invalidate();
                 }
             }
+            //CONTROL + A - SELECTE ANY
+            if (e.Control && e.KeyCode == Keys.A)
+            {
+                if (dialogProcessor.ShapeList.Any())
+                {
 
+                    foreach (var item in dialogProcessor.ShapeList)
+                    {
+                       dialogProcessor.Selection.Add(item);
+                    }
+                    statusBar.Items[0].Text = "Последно действие: Селектиране на всички фигури";
+                    viewPort.Invalidate();
+                }
+            }
+            
             //adding shortcuts to my application for better UX
             //CONTROL + 1
             if (e.Control && e.KeyValue == 49)
@@ -523,6 +548,45 @@ namespace Draw
             }
         }
 
+
+        private void searchSelectionTB_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) 
+            {
+                string inputText = searchSelectionTB.Text;
+                string text = inputText.Trim();
+                if (!String.IsNullOrEmpty(text))
+                {
+                    var shapes = dialogProcessor.ShapeList;
+                    var selection = dialogProcessor.Selection;
+                    if (shapes.Any())
+                    {
+                        foreach (var item in shapes)
+                        {
+                            if (item.ShapeName == inputText)
+                            {
+                                selection.Clear();
+                                selection.Add(item);
+                                statusBar.Items[0].Text = "Последно действие: Търсене по име";
+                                viewPort.Invalidate();
+                            }
+                            else
+                            {
+                                statusBar.Items[0].Text = "Няма намерени резултати от търсенето!";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        statusBar.Items[0].Text = "Все още няма добавени елементи!";
+                    }
+                }
+                else
+                {
+                    statusBar.Items[0].Text = "Моля въведете текст!";
+                }
+            }
+        }
     }
 }
     
