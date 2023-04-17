@@ -51,6 +51,10 @@
             this.colorDialog2 = new System.Windows.Forms.ColorDialog();
             this.colorButton = new System.Windows.Forms.Button();
             this.strokeColorButton = new System.Windows.Forms.Button();
+            this.errorLabel = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.opacityUpDown = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.opacityUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -239,12 +243,56 @@
             this.strokeColorButton.UseVisualStyleBackColor = true;
             this.strokeColorButton.Click += new System.EventHandler(this.strokeColorButton_Click);
             // 
+            // errorLabel
+            // 
+            this.errorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.errorLabel.ForeColor = System.Drawing.Color.Red;
+            this.errorLabel.Location = new System.Drawing.Point(50, 356);
+            this.errorLabel.Name = "errorLabel";
+            this.errorLabel.Size = new System.Drawing.Size(500, 20);
+            this.errorLabel.TabIndex = 25;
+            this.errorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(82, 317);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(114, 13);
+            this.label9.TabIndex = 26;
+            this.label9.Text = "Наситеност на цвета";
+            // 
+            // opacityUpDown
+            // 
+            this.opacityUpDown.Location = new System.Drawing.Point(233, 310);
+            this.opacityUpDown.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.opacityUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.opacityUpDown.Name = "opacityUpDown";
+            this.opacityUpDown.Size = new System.Drawing.Size(88, 20);
+            this.opacityUpDown.TabIndex = 27;
+            this.opacityUpDown.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
             // AddShape
             // 
             this.AcceptButton = this.addButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(588, 450);
+            this.Controls.Add(this.opacityUpDown);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.errorLabel);
             this.Controls.Add(this.strokeColorButton);
             this.Controls.Add(this.colorButton);
             this.Controls.Add(this.typeComboBox);
@@ -268,6 +316,7 @@
             this.Name = "AddShape";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Добавяне на фигура";
+            ((System.ComponentModel.ISupportInitialize)(this.opacityUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -297,5 +346,8 @@
         private System.Windows.Forms.ColorDialog colorDialog2;
         private System.Windows.Forms.Button colorButton;
         private System.Windows.Forms.Button strokeColorButton;
+        private System.Windows.Forms.Label errorLabel;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.NumericUpDown opacityUpDown;
     }
 }
