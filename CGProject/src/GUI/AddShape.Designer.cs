@@ -1,4 +1,4 @@
-﻿namespace Draw.src.GUI
+﻿namespace Draw
 {
     partial class AddShape
     {
@@ -37,20 +37,20 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.textBox10 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.nameTB = new System.Windows.Forms.TextBox();
+            this.xTB = new System.Windows.Forms.TextBox();
+            this.widthTB = new System.Windows.Forms.TextBox();
+            this.heightTB = new System.Windows.Forms.TextBox();
+            this.strokeWidthTB = new System.Windows.Forms.TextBox();
+            this.yTB = new System.Windows.Forms.TextBox();
+            this.addButton = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.typeComboBox = new System.Windows.Forms.ComboBox();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.colorDialog2 = new System.Windows.Forms.ColorDialog();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.colorButton = new System.Windows.Forms.Button();
+            this.strokeColorButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -125,56 +125,57 @@
             this.label8.TabIndex = 7;
             this.label8.Text = "Широчина на контура";
             // 
-            // textBox1
+            // nameTB
             // 
-            this.textBox1.Location = new System.Drawing.Point(233, 72);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(222, 20);
-            this.textBox1.TabIndex = 10;
+            this.nameTB.Location = new System.Drawing.Point(233, 72);
+            this.nameTB.Name = "nameTB";
+            this.nameTB.Size = new System.Drawing.Size(222, 20);
+            this.nameTB.TabIndex = 10;
             // 
-            // textBox3
+            // xTB
             // 
-            this.textBox3.Location = new System.Drawing.Point(255, 102);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(66, 20);
-            this.textBox3.TabIndex = 12;
+            this.xTB.Location = new System.Drawing.Point(255, 102);
+            this.xTB.Name = "xTB";
+            this.xTB.Size = new System.Drawing.Size(66, 20);
+            this.xTB.TabIndex = 12;
             // 
-            // textBox4
+            // widthTB
             // 
-            this.textBox4.Location = new System.Drawing.Point(233, 164);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 20);
-            this.textBox4.TabIndex = 13;
+            this.widthTB.Location = new System.Drawing.Point(233, 164);
+            this.widthTB.Name = "widthTB";
+            this.widthTB.Size = new System.Drawing.Size(100, 20);
+            this.widthTB.TabIndex = 13;
             // 
-            // textBox6
+            // heightTB
             // 
-            this.textBox6.Location = new System.Drawing.Point(233, 191);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(100, 20);
-            this.textBox6.TabIndex = 15;
+            this.heightTB.Location = new System.Drawing.Point(233, 191);
+            this.heightTB.Name = "heightTB";
+            this.heightTB.Size = new System.Drawing.Size(100, 20);
+            this.heightTB.TabIndex = 15;
             // 
-            // textBox8
+            // strokeWidthTB
             // 
-            this.textBox8.Location = new System.Drawing.Point(233, 282);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(100, 20);
-            this.textBox8.TabIndex = 17;
+            this.strokeWidthTB.Location = new System.Drawing.Point(233, 282);
+            this.strokeWidthTB.Name = "strokeWidthTB";
+            this.strokeWidthTB.Size = new System.Drawing.Size(100, 20);
+            this.strokeWidthTB.TabIndex = 17;
             // 
-            // textBox10
+            // yTB
             // 
-            this.textBox10.Location = new System.Drawing.Point(353, 102);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(68, 20);
-            this.textBox10.TabIndex = 19;
+            this.yTB.Location = new System.Drawing.Point(353, 102);
+            this.yTB.Name = "yTB";
+            this.yTB.Size = new System.Drawing.Size(68, 20);
+            this.yTB.TabIndex = 19;
             // 
-            // button1
+            // addButton
             // 
-            this.button1.Location = new System.Drawing.Point(258, 399);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 20;
-            this.button1.Text = "Добавяне";
-            this.button1.UseVisualStyleBackColor = true;
+            this.addButton.Location = new System.Drawing.Point(258, 399);
+            this.addButton.Name = "addButton";
+            this.addButton.Size = new System.Drawing.Size(75, 23);
+            this.addButton.TabIndex = 20;
+            this.addButton.Text = "Добавяне";
+            this.addButton.UseVisualStyleBackColor = true;
+            this.addButton.Click += new System.EventHandler(this.addButton_Click);
             // 
             // label11
             // 
@@ -194,52 +195,68 @@
             this.label12.TabIndex = 22;
             this.label12.Text = "Y:";
             // 
-            // comboBox1
+            // typeComboBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(233, 137);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 23;
+            this.typeComboBox.AutoCompleteCustomSource.AddRange(new string[] {
+            "Квадрат",
+            "Правоъгълник",
+            "Триъгълник",
+            "Кръг",
+            "Шестоъгълник"});
+            this.typeComboBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.typeComboBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.typeComboBox.FormattingEnabled = true;
+            this.typeComboBox.Items.AddRange(new object[] {
+            "Квадрат",
+            "Правоъгълник",
+            "Триъгълник",
+            "Кръг",
+            "Шестоъгълник"});
+            this.typeComboBox.Location = new System.Drawing.Point(233, 137);
+            this.typeComboBox.Name = "typeComboBox";
+            this.typeComboBox.Size = new System.Drawing.Size(121, 21);
+            this.typeComboBox.TabIndex = 23;
             // 
-            // button2
+            // colorButton
             // 
-            this.button2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button2.BackgroundImage")));
-            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button2.Location = new System.Drawing.Point(233, 216);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(30, 30);
-            this.button2.TabIndex = 24;
-            this.button2.UseVisualStyleBackColor = true;
+            this.colorButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("colorButton.BackgroundImage")));
+            this.colorButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.colorButton.Location = new System.Drawing.Point(233, 216);
+            this.colorButton.Name = "colorButton";
+            this.colorButton.Size = new System.Drawing.Size(30, 30);
+            this.colorButton.TabIndex = 24;
+            this.colorButton.UseVisualStyleBackColor = true;
+            this.colorButton.Click += new System.EventHandler(this.colorButton_Click);
             // 
-            // button3
+            // strokeColorButton
             // 
-            this.button3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button3.BackgroundImage")));
-            this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button3.Location = new System.Drawing.Point(233, 248);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(30, 30);
-            this.button3.TabIndex = 24;
-            this.button3.UseVisualStyleBackColor = true;
+            this.strokeColorButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("strokeColorButton.BackgroundImage")));
+            this.strokeColorButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.strokeColorButton.Location = new System.Drawing.Point(233, 248);
+            this.strokeColorButton.Name = "strokeColorButton";
+            this.strokeColorButton.Size = new System.Drawing.Size(30, 30);
+            this.strokeColorButton.TabIndex = 24;
+            this.strokeColorButton.UseVisualStyleBackColor = true;
+            this.strokeColorButton.Click += new System.EventHandler(this.strokeColorButton_Click);
             // 
             // AddShape
             // 
-            this.AcceptButton = this.button1;
+            this.AcceptButton = this.addButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(588, 450);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.strokeColorButton);
+            this.Controls.Add(this.colorButton);
+            this.Controls.Add(this.typeComboBox);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox10);
-            this.Controls.Add(this.textBox8);
-            this.Controls.Add(this.textBox6);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.addButton);
+            this.Controls.Add(this.yTB);
+            this.Controls.Add(this.strokeWidthTB);
+            this.Controls.Add(this.heightTB);
+            this.Controls.Add(this.widthTB);
+            this.Controls.Add(this.xTB);
+            this.Controls.Add(this.nameTB);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -250,7 +267,7 @@
             this.Controls.Add(this.label1);
             this.Name = "AddShape";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "AddShape";
+            this.Text = "Добавяне на фигура";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -266,19 +283,19 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox10;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox nameTB;
+        private System.Windows.Forms.TextBox xTB;
+        private System.Windows.Forms.TextBox widthTB;
+        private System.Windows.Forms.TextBox heightTB;
+        private System.Windows.Forms.TextBox strokeWidthTB;
+        private System.Windows.Forms.TextBox yTB;
+        private System.Windows.Forms.Button addButton;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox typeComboBox;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.ColorDialog colorDialog2;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button colorButton;
+        private System.Windows.Forms.Button strokeColorButton;
     }
 }

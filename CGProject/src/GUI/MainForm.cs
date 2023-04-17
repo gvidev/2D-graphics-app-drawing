@@ -1,4 +1,4 @@
-﻿using Draw.src.GUI;
+﻿
 using Draw.src.Model;
 using System;
 using System.Collections.Generic;
@@ -22,7 +22,10 @@ namespace Draw
         /// <summary>
         /// Агрегирания диалогов процесор във формата улеснява манипулацията на модела.
         /// </summary>
-        private DialogProcessor dialogProcessor = new DialogProcessor();
+        /// 
+
+        //get the current dialogProcessor in use in mainForm
+        private DialogProcessor dialogProcessor = DialogProcessor.GetInstance();
 
 
         public MainForm()
@@ -152,6 +155,8 @@ namespace Draw
                     if (dialogProcessor.Selection.Count == 1)
                     {
                         statusBar.Items[0].Text = "Последно действие: Селекция на примитив с име " + dialogProcessor.Selection.First().ShapeName;
+                        strokeWidthUpDown.Value = dialogProcessor.Selection.First().StrokeWidth;
+                        opacityChanger.Value = dialogProcessor.Selection.First().Opacity;
                     }
 
                     if (dialogProcessor.Selection.Count > 1)
@@ -230,15 +235,13 @@ namespace Draw
         private void strokeWitdhUpDown_ValueChanged(object sender, EventArgs e)
         {
 
-            if (dialogProcessor.Selection != null)
-            {
 
-                dialogProcessor.SetStrokeWidth((int)strokeWidthUpDown.Value);
+            dialogProcessor.SetStrokeWidth((int)strokeWidthUpDown.Value);
 
-                statusBar.Items[0].Text = "Последно действие: Промяна на големината на контура на фигурата";
+            statusBar.Items[0].Text = "Последно действие: Промяна на големината на контура на фигурата";
 
-                viewPort.Invalidate();
-            }
+            viewPort.Invalidate();
+
         }
 
         private void removeButton_Click(object sender, EventArgs e)
@@ -379,7 +382,7 @@ namespace Draw
 
 
 
-        
+
 
         //key shortcuts
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
@@ -396,12 +399,12 @@ namespace Draw
             //CONTROL + C - COPY SELECTED
             if (e.Control && e.KeyCode == Keys.C)
             {
-                copyButton_Click(sender,e);
+                copyButton_Click(sender, e);
             }
             //CONTROL + V - PASTE SELECTED
             if (e.Control && e.KeyCode == Keys.V)
             {
-               pasteButton_Click(sender,e);
+                pasteButton_Click(sender, e);
             }
             //CONTROL + A - SELECTE ANY
             if (e.Control && e.KeyCode == Keys.A)
@@ -463,9 +466,8 @@ namespace Draw
         {
             AddShape addForm = new AddShape();
             addForm.ShowDialog();
-
-            
-
+            statusBar.Items[0].Text = "Последно действие: Добавяне на фигура по избор";
+            viewPort.Invalidate();
 
 
 
@@ -615,9 +617,9 @@ namespace Draw
             }
         }
 
-        
+
     }
 }
-    
+
 
 

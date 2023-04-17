@@ -64,6 +64,17 @@ namespace Draw
             set { lastLocation = value; }
         }
 
+        //here we save and use one and only instance
+        private static DialogProcessor instance;
+
+        public static DialogProcessor GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new DialogProcessor();
+            }
+            return instance;
+        }
 
         #endregion
 
