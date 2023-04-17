@@ -112,7 +112,7 @@ namespace Draw
   //          set { transformationMatrix = value; }
   //      }
 
-        private float rotateAngle;
+        private float rotateAngle = 0;
 
         public virtual float RotateAngle
         {

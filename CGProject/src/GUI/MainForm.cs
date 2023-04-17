@@ -1,4 +1,5 @@
-﻿using Draw.src.Model;
+﻿using Draw.src.GUI;
+using Draw.src.Model;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -460,8 +461,10 @@ namespace Draw
         //need to be implemented
         private void AddShapeButton_Click(object sender, EventArgs e)
         {
-            Form addForm = new Form();
+            AddShape addForm = new AddShape();
             addForm.ShowDialog();
+
+            
 
 
 
