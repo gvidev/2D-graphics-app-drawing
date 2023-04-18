@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 
@@ -36,7 +37,7 @@ namespace Draw.src.Model
             return true;
 
         }
-
+        //Matrix transformationMatrix = new Matrix();
         /// <summary>
         /// Частта, визуализираща конкретния примитив.
         /// </summary>
@@ -45,8 +46,12 @@ namespace Draw.src.Model
           
             base.DrawSelf(grfx);
 
-            base.Rotate(grfx);
+
+            
+
             base.Scaling(grfx);
+            base.Rotate(grfx);
+            
             FillColor = Color.FromArgb
                 (
                 Opacity,
