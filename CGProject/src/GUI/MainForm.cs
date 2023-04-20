@@ -290,7 +290,7 @@ namespace Draw
                 if (newestShapes.Any() && newestShapes != null)
                 {
 
-                    foreach (var item in newestShapes)
+                    foreach (Shape item in newestShapes)
                     {
                         var temp = GetObjectType(item);
                         dialogProcessor.ShapeList.Add(temp);
@@ -311,14 +311,9 @@ namespace Draw
 
             Shape newestShape;
 
-            Rectangle rectangleCanvas
-                = new Rectangle((int)selectedShape.Location.X + 5, (int)selectedShape.Location.Y + 5, 100, 200);
-
-            Rectangle squareCanvas
-                = new Rectangle((int)selectedShape.Location.X + 5, (int)selectedShape.Location.Y + 5, 150, 150);
-
-            Rectangle hexagonCanvas
-                = new Rectangle((int)selectedShape.Location.X + 5, (int)selectedShape.Location.Y + 5, 200, 180);
+            Rectangle canvas
+                = new Rectangle((int)selectedShape.Location.X + 30, (int)selectedShape.Location.Y + 30, (int)selectedShape.Width, (int)selectedShape.Height);
+            
 
             switch (typeName)
             {
@@ -326,7 +321,7 @@ namespace Draw
                     if (selectedShape.Height == selectedShape.Width)
                     {
                         newestShape =
-                            new RectangleShape(squareCanvas);
+                            new RectangleShape(canvas);
                         newestShape.FillColor = selectedShape.FillColor;
                         newestShape.StrokeColor = selectedShape.StrokeColor;
                         newestShape.StrokeWidth = selectedShape.StrokeWidth;
@@ -337,7 +332,7 @@ namespace Draw
                     else
                     {
                         newestShape =
-                            new RectangleShape(rectangleCanvas);
+                            new RectangleShape(canvas);
                         newestShape.FillColor = selectedShape.FillColor;
                         newestShape.StrokeColor = selectedShape.StrokeColor;
                         newestShape.StrokeWidth = selectedShape.StrokeWidth;
@@ -348,7 +343,7 @@ namespace Draw
 
                 case "CircleShape":
                     newestShape =
-                            new CircleShape(squareCanvas);
+                            new CircleShape(canvas);
                     newestShape.FillColor = selectedShape.FillColor;
                     newestShape.StrokeColor = selectedShape.StrokeColor;
                     newestShape.StrokeWidth = selectedShape.StrokeWidth;
@@ -358,7 +353,7 @@ namespace Draw
 
                 case "TriangleShape":
                     newestShape =
-                            new TriangleShape(squareCanvas);
+                            new TriangleShape(canvas);
                     newestShape.FillColor = selectedShape.FillColor;
                     newestShape.StrokeColor = selectedShape.StrokeColor;
                     newestShape.StrokeWidth = selectedShape.StrokeWidth;
@@ -368,7 +363,7 @@ namespace Draw
 
                 case "HexagonShape":
                     newestShape =
-                            new HexagonShape(hexagonCanvas);
+                            new HexagonShape(canvas);
                     newestShape.FillColor = selectedShape.FillColor;
                     newestShape.StrokeColor = selectedShape.StrokeColor;
                     newestShape.StrokeWidth = selectedShape.StrokeWidth;
@@ -396,17 +391,27 @@ namespace Draw
             {
                 removeButton_Click(sender, e);
             }
+
             //CONTROL + C - COPY SELECTED
             if (e.Control && e.KeyCode == Keys.C)
             {
                 copyButton_Click(sender, e);
             }
+
             //CONTROL + V - PASTE SELECTED
             if (e.Control && e.KeyCode == Keys.V)
             {
                 pasteButton_Click(sender, e);
+
             }
-            //CONTROL + A - SELECTE ANY
+
+            //CONTROL + N - NEW SHAPE   
+            if (e.Control && e.KeyCode == Keys.N)
+            {
+                AddShapeButton_Click(sender, e);
+            }
+
+            //CONTROL + A - SELECTE All
             if (e.Control && e.KeyCode == Keys.A)
             {
                 if (dialogProcessor.ShapeList.Any())
@@ -416,10 +421,12 @@ namespace Draw
                     {
                         dialogProcessor.Selection.Add(item);
                     }
+
                     statusBar.Items[0].Text = "Последно действие: Селектиране на всички фигури";
                     viewPort.Invalidate();
                 }
             }
+
 
             //adding shortcuts to my application for better UX
             //CONTROL + 1
@@ -429,20 +436,25 @@ namespace Draw
                 statusBar.Items[0].Text = "Последно действие: Рисуване на квадрат на произволно място на платното";
                 viewPort.Invalidate();
             }
+
             //CONTROL + 2
             if (e.Control && e.KeyValue == 50)
             {
                 dialogProcessor.AddRandomRectangle(portHeigth, portWidth);
-                statusBar.Items[0].Text = "Последно действие: Рисуване на правоъгълник на произволно място на платното";
+                statusBar.Items[0].Text =
+                    "Последно действие: Рисуване на правоъгълник на произволно място на платното";
                 viewPort.Invalidate();
             }
+
             //CONTROL + 3
             if (e.Control && e.KeyValue == 51)
             {
                 dialogProcessor.AddRandomTriangle(portHeigth, portWidth);
-                statusBar.Items[0].Text = "Последно действие:  Рисуване на триъгълник на произволно място на платното";
+                statusBar.Items[0].Text =
+                    "Последно действие:  Рисуване на триъгълник на произволно място на платното";
                 viewPort.Invalidate();
-            }
+            }   
+
             //CONTROL + 4
             if (e.Control && e.KeyValue == 52)
             {
@@ -450,15 +462,18 @@ namespace Draw
                 statusBar.Items[0].Text = "Последно действие: Рисуване на кръг на произволно място на платното";
                 viewPort.Invalidate();
             }
+
             //CONTROL + 5
             if (e.Control && e.KeyValue == 53)
             {
                 dialogProcessor.AddRandomHexagon(portHeigth, portWidth);
-                statusBar.Items[0].Text = "Последно действие: Рисуване на шестоъгълник на произволно място на платното";
+                statusBar.Items[0].Text =
+                    "Последно действие: Рисуване на шестоъгълник на произволно място на платното";
                 viewPort.Invalidate();
             }
 
         }
+    
 
 
         //need to be implemented
@@ -617,7 +632,7 @@ namespace Draw
             }
         }
 
-
+       
     }
 }
 

@@ -14,7 +14,8 @@ namespace Draw
 		
 		public Shape()
 		{
-		}
+            
+        }
 		
 		public Shape(RectangleF rect)
 		{
@@ -153,38 +154,6 @@ namespace Draw
 
             grfx.TranslateTransform(-(Rectangle.X + Rectangle.Width / 2), -(Rectangle.Y + Rectangle.Height / 2));
         }
-
-        //public virtual void Rotate(Graphics grfx)
-        //{
-        //    grfx.TranslateTransform(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 2);
-        //    grfx.RotateTransform(RotateAngle);
-        //    grfx.TranslateTransform(-(Rectangle.X + Rectangle.Width / 2), -(Rectangle.Y + Rectangle.Height / 2));
-
-        //    // Update the shape's bounding box to match its new visual appearance
-        //    Matrix rotationMatrix = new Matrix();
-        //    rotationMatrix.RotateAt(RotateAngle, new PointF(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 2));
-        //    PointF[] corners = { new PointF(Rectangle.X, Rectangle.Y), new PointF(Rectangle.X + Rectangle.Width, Rectangle.Y), new PointF(Rectangle.X, Rectangle.Y + Rectangle.Height), new PointF(Rectangle.X + Rectangle.Width, Rectangle.Y + Rectangle.Height) };
-        //    rotationMatrix.TransformPoints(corners);
-        //    float left = Math.Min(corners[0].X, Math.Min(corners[1].X, Math.Min(corners[2].X, corners[3].X)));
-        //    float top = Math.Min(corners[0].Y, Math.Min(corners[1].Y, Math.Min(corners[2].Y, corners[3].Y)));
-        //    float right = Math.Max(corners[0].X, Math.Max(corners[1].X, Math.Max(corners[2].X, corners[3].X)));
-        //    float bottom = Math.Max(corners[0].Y, Math.Max(corners[1].Y, Math.Max(corners[2].Y, corners[3].Y)));
-        //    Rectangle = new RectangleF(left, top, right - left, bottom - top);
-        //}
-
-        //public virtual void Scaling(Graphics grfx)
-        //{
-        //    grfx.TranslateTransform(Rectangle.X + Rectangle.Width / 2, Rectangle.Y + Rectangle.Height / 2);
-        //    grfx.ScaleTransform(scale, scale);
-        //    grfx.TranslateTransform(-(Rectangle.X + Rectangle.Width / 2), -(Rectangle.Y + Rectangle.Height / 2));
-
-        //    // Update the shape's size to match its new visual appearance
-        //    SizeF newSize = new SizeF(Rectangle.Width * scale, Rectangle.Height * scale);
-        //    PointF newLocation = new PointF(Rectangle.X + (Rectangle.Width - newSize.Width) / 2, Rectangle.Y + (Rectangle.Height - newSize.Height) / 2);
-        //    Rectangle = new RectangleF(newLocation, newSize);
-        //}
-
-
 
         public virtual void Scaling(Graphics grfx)
         {

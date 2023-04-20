@@ -49,6 +49,8 @@ namespace Draw
 			base.DrawSelf(grfx);
             base.Rotate(grfx);
 			base.Scaling(grfx);
+			
+
             FillColor = Color.FromArgb
                 (
                 Opacity,

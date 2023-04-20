@@ -78,6 +78,7 @@ namespace Draw
 
         #endregion
 
+        #region Add random shapes
         /// <summary>
         /// Добавя примитив - правоъгълник на произволно място върху клиентската област.
         /// </summary>
@@ -96,7 +97,9 @@ namespace Draw
             ShapeList.Add(rect);
         }
 
-
+        /// <summary>
+        /// Добавя примитив - триъгълник на произволно място върху клиентската област.
+        /// </summary>
         public void AddRandomTriangle(int heigth, int width)
         {
             Random rnd = new Random();
@@ -112,6 +115,9 @@ namespace Draw
             ShapeList.Add(triangle);
         }
 
+        /// <summary>
+        /// Добавя примитив - кръг на произволно място върху клиентската област.
+        /// </summary>
         public void AddRandomCircle(int heigth, int width)
         {
             Random rnd = new Random();
@@ -127,6 +133,9 @@ namespace Draw
             ShapeList.Add(circle);
         }
 
+        /// <summary>
+        /// Добавя примитив - квадрат на произволно място върху клиентската област.
+        /// </summary>
         public void AddRandomSquare(int heigth, int width)
         {
             Random rnd = new Random();
@@ -142,6 +151,9 @@ namespace Draw
             ShapeList.Add(square);
         }
 
+        /// <summary>
+        /// Добавя примитив - шестоъгълник на произволно място върху клиентската област.
+        /// </summary>
         public void AddRandomHexagon(int heigth, int width)
         {
             Random rnd = new Random();
@@ -156,6 +168,8 @@ namespace Draw
 
             ShapeList.Add(hexagon);
         }
+
+        #endregion
 
         /// <summary>
         /// Проверява дали дадена точка е в елемента.
@@ -196,6 +210,10 @@ namespace Draw
             lastLocation = p;
         }
 
+        /// <summary>
+        /// Задава цвят на контура на избрания примитив или група от примитиви
+        /// </summary>
+        /// <param name="color"></param>
         public void SetStrokeColor(Color color)
         {
             if (selection.Any())
@@ -209,6 +227,10 @@ namespace Draw
             }
         }
 
+        /// <summary>
+        /// Задава цвят на избрания примитив или група от примитиви
+        /// </summary>
+        /// <param name="color"></param>
         public void SetFillColor(Color color)
         {
             if (selection.Count > 0)
@@ -221,6 +243,11 @@ namespace Draw
             }
         }
 
+
+        /// <summary>
+        /// Задава дебелина на контура на избрания примитив или група от примитиви
+        /// </summary>
+        /// <param name="strokeWidth"></param>
         public void SetStrokeWidth(int strokeWidth)
         {
             if (selection.Count > 0)
@@ -233,6 +260,10 @@ namespace Draw
             }
         }
 
+        /// <summary>
+        /// Задава прозрачност на избрания примитив или група от примитиви
+        /// </summary>
+        /// <param name="opacity"></param>
         public void SetOpacity(int opacity)
         {
             if (selection.Count > 0)
@@ -245,6 +276,10 @@ namespace Draw
             }
         }
 
+        /// <summary>
+        /// Проверява дали имаме селектиран примитив или група  и ако да , тогава преминава през селекцията и завърта примитивите
+        /// </summary>
+        /// <param name="angle"></param>
         public void RotatePrimitive(float angle)
         {
             if (selection.Any())
@@ -257,6 +292,10 @@ namespace Draw
             }
         }
 
+        /// <summary>
+        /// Прави същото като горният метод но вместо това оголемява примитивите
+        /// </summary>
+        /// <param name="scale"></param>
         public void ScalePrimitive(float scale)
         {
             if (selection.Count > 0)
@@ -266,9 +305,6 @@ namespace Draw
                     shape.Scale *= scale;
                 }
             }
-
-
-
         }
 
         public override void Draw(Graphics grfx)
@@ -278,24 +314,25 @@ namespace Draw
             if (selection != null)
             {
 
-               // GraphicsState g;
+                // GraphicsState g;
                 foreach (Shape shape in Selection)
                 {
-                  //  g = grfx.Save();
-                   // shape.TransformationMatrix.Multiply(grfx.Transform);
+                    //  g = grfx.Save();
+                    // shape.TransformationMatrix.Multiply(grfx.Transform);
                     float[] dashValues = { 4, 2 };
                     Pen dashPen = new Pen(Color.Black, 3);
                     //grfx.Transform = shape.TransformationMatrix;
                     dashPen.DashPattern = dashValues;
                     grfx.DrawRectangle(
                         dashPen,
-                        shape.Location.X -10 ,
+                        shape.Location.X - 10,
                         shape.Location.Y - 10,
                         shape.Width + 20,
                         shape.Height + 20
-                        );
+                    );
 
-                  //  grfx.Restore(g);
+
+                    //  grfx.Restore(g);
                 }
 
             }
@@ -313,7 +350,7 @@ namespace Draw
             Selection.Remove(shape);
         }
 
-
+        #region Groups
         public void GroupPrimitives()
         {
             if (Selection.Count < 2) return;
@@ -335,7 +372,7 @@ namespace Draw
             GroupShape group = new GroupShape(new RectangleF(minX, minY, maxX - minX, maxY - minY));
             groupShapes.Add(group);
             group.SubShapes = Selection;
-            Selection = new List<Shape> { group};
+            Selection = new List<Shape> { group };
 
             foreach (Shape item in group.SubShapes)
             {
@@ -346,8 +383,6 @@ namespace Draw
             ShapeList.Add(group);
 
         }
-
-
         public void UngroupShapes()
         {
             // Check if there is only one selected shape, and it is a group
@@ -368,7 +403,9 @@ namespace Draw
                 Selection.AddRange(subShapes);
             }
         }
+        #endregion
 
+        #region Serialization
 
         public object DeSerializeFile(string path = null)
         {
@@ -404,5 +441,9 @@ namespace Draw
             binaryFormatter.Serialize(stream, currentObject);
             stream.Close();
         }
+        #endregion
+
+
+
     }
 }
