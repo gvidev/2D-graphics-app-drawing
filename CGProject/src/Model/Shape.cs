@@ -124,7 +124,6 @@ namespace Draw
 
 
         private float scale = 1;
-
         public virtual float Scale
         {
             get { return scale; }

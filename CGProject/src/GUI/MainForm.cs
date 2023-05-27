@@ -706,7 +706,12 @@ namespace Draw
             }
         }
 
-
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            dialogProcessor.ShrinkPrimitive(1.1f);
+            statusBar.Items[0].Text = "Последно действие: Промяна на размера на фигурата";
+            viewPort.Invalidate();
+        }
     }
 }
 

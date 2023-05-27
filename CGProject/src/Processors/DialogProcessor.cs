@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using System.Windows.Controls;
+using Microsoft.VisualBasic;
 
 namespace Draw
 {
@@ -301,9 +302,47 @@ namespace Draw
         {
             if (selection.Count > 0)
             {
+                
                 foreach (var shape in Selection)
                 {
-                    shape.Scale *= scale;
+                    if (shape.GetType().Name.Equals("GroupShape"))
+                    {
+                        GroupShape groupShape = shape as GroupShape;
+                       
+                        foreach(var item in groupShape.SubShapes)
+                        {
+                            item.Scale *= scale;
+                        }
+                    }
+                    else
+                    {
+                        shape.Scale *= scale;
+                    }
+
+                }
+            }
+        }
+        public void ShrinkPrimitive(float scale)
+        {
+            if (selection.Count > 0)
+            {
+
+                foreach (var shape in Selection)
+                {
+                    if (shape.GetType().Name.Equals("GroupShape"))
+                    {
+                        GroupShape groupShape = shape as GroupShape;
+
+                        foreach (var item in groupShape.SubShapes)
+                        {
+                            item.Scale /= scale;
+                        }
+                    }
+                    else
+                    {
+                        shape.Scale /= scale;
+                    }
+
                 }
             }
         }
