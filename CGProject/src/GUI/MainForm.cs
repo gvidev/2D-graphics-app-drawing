@@ -262,47 +262,113 @@ namespace Draw
         }
 
         //should be used for copy and paste element
-        List<Shape> newestShapes = null;
+        //List<Shape> newestShapes = null;
         bool copy = false;
+        List<Shape> copiedSelection = null;
 
-
+        //already reworked! Now it works also with Groups and so on...
+        //So many things are not necessary
         private void copyButton_Click(object sender, EventArgs e)
         {
-            var selectedShape = dialogProcessor.Selection;
+            copiedSelection = dialogProcessor.Selection;
+            copy = true;
+            statusBar.Items[0].Text = "Последно действие: Копиране на селекцията";
+            //var selectedShape = dialogProcessor.Selection;
 
-            if (dialogProcessor.Selection.Count > 0)
-            {
-                newestShapes = new List<Shape>();
-                foreach (Shape shape in dialogProcessor.Selection)
-                {
-                    var temp = GetObjectType(shape);
-                    newestShapes.Add(temp);
-                    copy = true;
-                    statusBar.Items[0].Text = "Последно действие: Копиране на селекцията";
-                }
-            }
+            //if (dialogProcessor.Selection.Count > 0)
+            //{
+            //    newestShapes = new List<Shape>();
+            //    foreach (Shape shape in dialogProcessor.Selection)
+            //    {
+            //        var temp = GetObjectType(shape);
+            //        newestShapes.Add(temp);
+            //        copy = true;
+            //        statusBar.Items[0].Text = "Последно действие: Копиране на селекцията";
+            //    }
+            //}
         }
 
+        
+        //already reworked! Now it works also with Groups and so on...
         private void pasteButton_Click(object sender, EventArgs e)
         {
             if (copy)
             {
-                if (newestShapes.Any() && newestShapes != null)
+                if (copiedSelection != null)
                 {
-
-                    foreach (Shape item in newestShapes)
+                    for (int i = 0; i < copiedSelection.Count; i++)
                     {
-                        var temp = GetObjectType(item);
-                        dialogProcessor.ShapeList.Add(temp);
+                        //gets the first element in the selection
+                        //whatever group or shape is 
+                        var item = copiedSelection[i];
+
+                        //check if it is a group
+                        if (item.GetType().Name.Equals("GroupShape"))
+                        {
+                            //then create a new groupShape to go through it
+                            //we copy the info from the selection[item]
+                            GroupShape group = (GroupShape)copiedSelection[i];
+
+                            //then I simply create a new rectangle for the border but with extended bord
+                            //from the first one
+                            Rectangle rectangle =
+                                new Rectangle((int)group.Rectangle.Location.X, (int)group.Rectangle.Location.Y,
+                                (int)group.Width + 50, (int)group.Height + 50);
+
+                            //then i create a new group which is empty from the start but with the correct border
+                            GroupShape groupToAdd = new GroupShape(rectangle);
+
+                            //i gone through all subShapes in the group 
+                            //get the type of the shape with the custom method that I`ve create
+                            //then add them with the new metrics in the newestGroup subshapes 
+                            foreach (var x in group.SubShapes)
+                            {
+                                var temp2 = GetObjectType(x);
+                                groupToAdd.SubShapes.Add(temp2);
+                                //group.SubShapes.Add(temp2);
+                                //GroupShape groupToCreate = group;
+                                //dialogProcessor.ShapeList.Add(gro);
+                                //GroupShape newestGroup = new GroupShape(group.Rectangle);
+                                //newestGroup.SubShapes.Add(temp2);
+                                //dialogProcessor.GroupShapes.Add(newestGroup);
+                                // dialogProcessor.GroupShapes..Add(temp2);
+                            }
+                            //I just adding the group to Shape List and when Invalidate the view to go through all and get them see
+                            dialogProcessor.ShapeList.Add(groupToAdd);
+
+
+                        }
+                        else
+                        {
+                            var temp = GetObjectType(item);
+                            dialogProcessor.ShapeList.Add(temp);
+                        }
+
                     }
                     statusBar.Items[0].Text = "Последно действие: Поставяне на селекцията";
                     viewPort.Invalidate();
-                    copy = false;
-
-
                 }
             }
+
+            //if (copy)
+            //{
+            //    if (newestShapes.Any() && newestShapes != null)
+            //    {
+
+            //        foreach (Shape item in newestShapes)
+            //        {
+            //            var temp = GetObjectType(item);
+            //            dialogProcessor.ShapeList.Add(temp);
+            //        }
+            //        statusBar.Items[0].Text = "Последно действие: Поставяне на селекцията";
+            //        viewPort.Invalidate();
+            //        copy = false;
+
+
+            //    }
+            //}
         }
+
 
         private Shape GetObjectType(Shape selectedShape)
         {
@@ -313,7 +379,7 @@ namespace Draw
 
             Rectangle canvas
                 = new Rectangle((int)selectedShape.Location.X + 30, (int)selectedShape.Location.Y + 30, (int)selectedShape.Width, (int)selectedShape.Height);
-            
+
 
             switch (typeName)
             {
@@ -411,6 +477,14 @@ namespace Draw
                 AddShapeButton_Click(sender, e);
             }
 
+            //CONTROL + G - Group
+            if (e.Control && e.KeyCode == Keys.G)
+            {
+                dialogProcessor.GroupPrimitives();
+                statusBar.Items[0].Text = "Последно действие: Групиране на фигури";
+                viewPort.Invalidate();
+            }
+
             //CONTROL + A - SELECTE All
             if (e.Control && e.KeyCode == Keys.A)
             {
@@ -453,7 +527,7 @@ namespace Draw
                 statusBar.Items[0].Text =
                     "Последно действие:  Рисуване на триъгълник на произволно място на платното";
                 viewPort.Invalidate();
-            }   
+            }
 
             //CONTROL + 4
             if (e.Control && e.KeyValue == 52)
@@ -473,7 +547,7 @@ namespace Draw
             }
 
         }
-    
+
 
 
         //need to be implemented
@@ -632,7 +706,7 @@ namespace Draw
             }
         }
 
-       
+
     }
 }
 
