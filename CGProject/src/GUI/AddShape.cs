@@ -103,6 +103,16 @@ namespace Draw
                             hexagon.Opacity = opacity;
                             dialogProcessor.ShapeList.Add(hexagon);
                             break;
+                        case 5:
+                            Shape0 shape0 =
+                                new Shape0(new Rectangle(locationX, locationY, width, height));
+                            shape0.FillColor = shapeColor;
+                            shape0.StrokeColor = strokeColor;
+                            shape0.ShapeName = name;
+                            shape0.StrokeWidth = strokeWidth;
+                            shape0.Opacity = opacity;
+                            dialogProcessor.ShapeList.Add(shape0);
+                            break;
                         default:
                             break;
                     }
@@ -161,7 +171,7 @@ namespace Draw
             return flag;
         }
 
-
+        
     }
 }
 

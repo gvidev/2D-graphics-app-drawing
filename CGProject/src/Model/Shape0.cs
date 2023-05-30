@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Windows;
 
 namespace Draw.src.Model
 {
     [Serializable]
-    public  class Shape0 : Shape
+    public class Shape0: Shape
     {
+
         #region Constructor
         public Shape0(RectangleF rect) : base(rect)
         {
         }
 
-        public Shape0(TriangleShape triangle) : base(triangle)
+        public Shape0(Shape0 shape0) : base(shape0)
         {
         }
 
@@ -49,10 +49,6 @@ namespace Draw.src.Model
 
         public override void DrawSelf(Graphics grfx)
         {
-            //float x1 = 40, y1 = 160;
-            //float x2 = 100, y2 = 40;
-            //float x3 = 160, y3 = 160;
-
             //point B
             float x_up = Rectangle.X + Rectangle.Width / 2;
             float y_up = Rectangle.Y;
@@ -65,7 +61,7 @@ namespace Draw.src.Model
             float x_right = Rectangle.X + Rectangle.Width;
             float y_right = Rectangle.Y + Rectangle.Height;
 
-           // Point G
+            // Point G
             float x_center = Rectangle.X + Rectangle.Width / 2;
             float y_center = Rectangle.Y + Rectangle.Height / 2;
 
@@ -74,24 +70,16 @@ namespace Draw.src.Model
             base.Rotate(grfx);
             base.Scaling(grfx);
             PointF[] points = new PointF[3];
-            //PointF A = new PointF(x1, y1);
-            //PointF B = new PointF(x2, y2);
-            //PointF C = new PointF(x3, y3);
 
             PointF A = new PointF(x_Left, y_Left);
             PointF B = new PointF(x_up, y_up);
             PointF C = new PointF(x_right, y_right);
             PointF G = new PointF(x_center, y_center);
 
-           
+
             points[0] = A;
             points[1] = B;
             points[2] = C;
-            //points[8] = A;
-            //points[6] = B;
-            //points[7] = G;
-            //points[8] = B;
-            //points[9] = C;
 
 
 
@@ -104,9 +92,6 @@ namespace Draw.src.Model
                 );
 
 
-            //grfx.Transform = TransformationMatrix;
-
-            
             grfx.FillPolygon(new SolidBrush(FillColor), points);
             grfx.DrawLine(new Pen(StrokeColor, StrokeWidth), points[0], G);
             grfx.DrawLine(new Pen(StrokeColor, StrokeWidth), points[1], G);

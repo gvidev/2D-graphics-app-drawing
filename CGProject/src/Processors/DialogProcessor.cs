@@ -161,7 +161,7 @@ namespace Draw
             int x = rnd.Next(50, width);
             int y = rnd.Next(50, heigth);
 
-            HexagonShape hexagon = new HexagonShape(new Rectangle(x, y, 150, 150));
+            HexagonShape hexagon = new HexagonShape(new Rectangle(x, y, 200, 180));
             hexagon.FillColor = Color.White;
             hexagon.StrokeColor = Color.Black;
             //just a random number that have so small probabillity to be same twice in our program
@@ -176,13 +176,13 @@ namespace Draw
             int x = rnd.Next(50, width);
             int y = rnd.Next(50, heigth);
 
-            Shape0 hexagon = new Shape0(new Rectangle(x, y, 200, 180));
-            hexagon.FillColor = Color.White;
-            hexagon.StrokeColor = Color.Black;
+            Shape0 shape0 = new Shape0(new Rectangle(x, y, 180, 150));
+            shape0.FillColor = Color.White;
+            shape0.StrokeColor = Color.Black;
             //just a random number that have so small probabillity to be same twice in our program
-            hexagon.ShapeName = "hexagon#" + new Random().Next();
+            shape0.ShapeName = "Shape0#" + new Random().Next();
 
-            ShapeList.Add(hexagon);
+            ShapeList.Add(shape0);
         }
 
         #endregion

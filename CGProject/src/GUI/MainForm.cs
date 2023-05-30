@@ -125,7 +125,7 @@ namespace Draw
 
         }
 
-            
+        
 
 
         /// <summary>
@@ -319,6 +319,7 @@ namespace Draw
 
                             //then i create a new group which is empty from the start but with the correct border
                             GroupShape groupToAdd = new GroupShape(rectangle);
+                            groupToAdd.ShapeName = "group#" + new Random().Next();
 
                             //i gone through all subShapes in the group 
                             //get the type of the shape with the custom method that I`ve create
@@ -438,6 +439,16 @@ namespace Draw
                     newestShape.Opacity = selectedShape.Opacity;
                     newestShape.ShapeName = "hexagon#" + new Random().Next();
                     return newestShape;
+
+                case "Shape0":
+                    newestShape =
+                            new Shape0(canvas);
+                    newestShape.FillColor = selectedShape.FillColor;
+                    newestShape.StrokeColor = selectedShape.StrokeColor;
+                    newestShape.StrokeWidth = selectedShape.StrokeWidth;
+                    newestShape.Opacity = selectedShape.Opacity;
+                    newestShape.ShapeName = "shape0#" + new Random().Next();
+                    return newestShape;
             }
             return null;
         }
@@ -545,6 +556,15 @@ namespace Draw
                 dialogProcessor.AddRandomHexagon(portHeigth, portWidth);
                 statusBar.Items[0].Text =
                     "Последно действие: Рисуване на шестоъгълник на произволно място на платното";
+                viewPort.Invalidate();
+            }
+
+            //CONTROL + 6
+            if (e.Control && e.KeyValue == 54)
+            {
+                dialogProcessor.AddRandomShape0(portHeigth, portWidth);
+                statusBar.Items[0].Text =
+                    "Последно действие: Рисуване на Фигура 0 на произволно място на платното";
                 viewPort.Invalidate();
             }
 
@@ -715,14 +735,14 @@ namespace Draw
             viewPort.Invalidate();
         }
 
-        private void toolStripButton1_Click_1(object sender, EventArgs e)
+        private void drawFigure0SpeedButton_Click(object sender, EventArgs e)
         {
             int portHeigth = viewPort.Height - 100;
             int portWidth = viewPort.Width - 100;
 
             dialogProcessor.AddRandomShape0(portHeigth, portWidth);
 
-            statusBar.Items[0].Text = "Последно действие: Рисуване на шестоъгълник на произволно място на платното";
+            statusBar.Items[0].Text = "Последно действие: Рисуване на фигура0 на произволно място на платното";
 
             viewPort.Invalidate();
         }

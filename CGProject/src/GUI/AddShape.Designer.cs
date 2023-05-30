@@ -60,122 +60,137 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(82, 75);
+            this.label1.Location = new System.Drawing.Point(123, 115);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 13);
+            this.label1.Size = new System.Drawing.Size(40, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "Име";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(82, 140);
+            this.label2.Location = new System.Drawing.Point(123, 215);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(91, 13);
+            this.label2.Size = new System.Drawing.Size(136, 20);
             this.label2.TabIndex = 1;
             this.label2.Text = "Тип на фигурата";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(82, 109);
+            this.label3.Location = new System.Drawing.Point(123, 168);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(51, 13);
+            this.label3.Size = new System.Drawing.Size(74, 20);
             this.label3.TabIndex = 2;
             this.label3.Text = "Локация";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(82, 167);
+            this.label4.Location = new System.Drawing.Point(123, 257);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(57, 13);
+            this.label4.Size = new System.Drawing.Size(85, 20);
             this.label4.TabIndex = 3;
             this.label4.Text = "Широчина";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(82, 198);
+            this.label5.Location = new System.Drawing.Point(123, 305);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(55, 13);
+            this.label5.Size = new System.Drawing.Size(82, 20);
             this.label5.TabIndex = 4;
             this.label5.Text = "Височина";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(82, 226);
+            this.label6.Location = new System.Drawing.Point(123, 348);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(97, 13);
+            this.label6.Size = new System.Drawing.Size(148, 20);
             this.label6.TabIndex = 5;
             this.label6.Text = "Цвят на фигурата";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(82, 257);
+            this.label7.Location = new System.Drawing.Point(123, 395);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(90, 13);
+            this.label7.Size = new System.Drawing.Size(134, 20);
             this.label7.TabIndex = 6;
             this.label7.Text = "Цвят на контура";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(82, 285);
+            this.label8.Location = new System.Drawing.Point(123, 438);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(115, 13);
+            this.label8.Size = new System.Drawing.Size(171, 20);
             this.label8.TabIndex = 7;
             this.label8.Text = "Широчина на контура";
             // 
             // nameTB
             // 
-            this.nameTB.Location = new System.Drawing.Point(233, 72);
+            this.nameTB.Location = new System.Drawing.Point(350, 111);
+            this.nameTB.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.nameTB.Name = "nameTB";
-            this.nameTB.Size = new System.Drawing.Size(222, 20);
+            this.nameTB.Size = new System.Drawing.Size(331, 26);
             this.nameTB.TabIndex = 10;
             // 
             // xTB
             // 
-            this.xTB.Location = new System.Drawing.Point(255, 102);
+            this.xTB.Location = new System.Drawing.Point(382, 157);
+            this.xTB.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.xTB.Name = "xTB";
-            this.xTB.Size = new System.Drawing.Size(66, 20);
+            this.xTB.Size = new System.Drawing.Size(97, 26);
             this.xTB.TabIndex = 12;
             // 
             // widthTB
             // 
-            this.widthTB.Location = new System.Drawing.Point(233, 164);
+            this.widthTB.Location = new System.Drawing.Point(350, 252);
+            this.widthTB.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.widthTB.Name = "widthTB";
-            this.widthTB.Size = new System.Drawing.Size(100, 20);
+            this.widthTB.Size = new System.Drawing.Size(148, 26);
             this.widthTB.TabIndex = 13;
             // 
             // heightTB
             // 
-            this.heightTB.Location = new System.Drawing.Point(233, 191);
+            this.heightTB.Location = new System.Drawing.Point(350, 294);
+            this.heightTB.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.heightTB.Name = "heightTB";
-            this.heightTB.Size = new System.Drawing.Size(100, 20);
+            this.heightTB.Size = new System.Drawing.Size(148, 26);
             this.heightTB.TabIndex = 15;
             // 
             // strokeWidthTB
             // 
-            this.strokeWidthTB.Location = new System.Drawing.Point(233, 282);
+            this.strokeWidthTB.Location = new System.Drawing.Point(350, 434);
+            this.strokeWidthTB.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.strokeWidthTB.Name = "strokeWidthTB";
-            this.strokeWidthTB.Size = new System.Drawing.Size(100, 20);
+            this.strokeWidthTB.Size = new System.Drawing.Size(148, 26);
             this.strokeWidthTB.TabIndex = 17;
             // 
             // yTB
             // 
-            this.yTB.Location = new System.Drawing.Point(353, 102);
+            this.yTB.Location = new System.Drawing.Point(530, 157);
+            this.yTB.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.yTB.Name = "yTB";
-            this.yTB.Size = new System.Drawing.Size(68, 20);
+            this.yTB.Size = new System.Drawing.Size(100, 26);
             this.yTB.TabIndex = 19;
             // 
             // addButton
             // 
-            this.addButton.Location = new System.Drawing.Point(258, 399);
+            this.addButton.Location = new System.Drawing.Point(387, 614);
+            this.addButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.addButton.Name = "addButton";
-            this.addButton.Size = new System.Drawing.Size(75, 23);
+            this.addButton.Size = new System.Drawing.Size(112, 35);
             this.addButton.TabIndex = 20;
             this.addButton.Text = "Добавяне";
             this.addButton.UseVisualStyleBackColor = true;
@@ -184,18 +199,20 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(232, 109);
+            this.label11.Location = new System.Drawing.Point(348, 168);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(17, 13);
+            this.label11.Size = new System.Drawing.Size(24, 20);
             this.label11.TabIndex = 21;
             this.label11.Text = "X:";
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(330, 109);
+            this.label12.Location = new System.Drawing.Point(495, 168);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(17, 13);
+            this.label12.Size = new System.Drawing.Size(24, 20);
             this.label12.TabIndex = 22;
             this.label12.Text = "Y:";
             // 
@@ -215,19 +232,22 @@
             "Правоъгълник",
             "Триъгълник",
             "Кръг",
-            "Шестоъгълник"});
-            this.typeComboBox.Location = new System.Drawing.Point(233, 137);
+            "Шестоъгълник",
+            "Фигура 0"});
+            this.typeComboBox.Location = new System.Drawing.Point(350, 211);
+            this.typeComboBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.typeComboBox.Name = "typeComboBox";
-            this.typeComboBox.Size = new System.Drawing.Size(121, 21);
+            this.typeComboBox.Size = new System.Drawing.Size(180, 28);
             this.typeComboBox.TabIndex = 23;
             // 
             // colorButton
             // 
             this.colorButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("colorButton.BackgroundImage")));
             this.colorButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.colorButton.Location = new System.Drawing.Point(233, 216);
+            this.colorButton.Location = new System.Drawing.Point(350, 332);
+            this.colorButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.colorButton.Name = "colorButton";
-            this.colorButton.Size = new System.Drawing.Size(30, 30);
+            this.colorButton.Size = new System.Drawing.Size(45, 46);
             this.colorButton.TabIndex = 24;
             this.colorButton.UseVisualStyleBackColor = true;
             this.colorButton.Click += new System.EventHandler(this.colorButton_Click);
@@ -236,9 +256,10 @@
             // 
             this.strokeColorButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("strokeColorButton.BackgroundImage")));
             this.strokeColorButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.strokeColorButton.Location = new System.Drawing.Point(233, 248);
+            this.strokeColorButton.Location = new System.Drawing.Point(350, 382);
+            this.strokeColorButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.strokeColorButton.Name = "strokeColorButton";
-            this.strokeColorButton.Size = new System.Drawing.Size(30, 30);
+            this.strokeColorButton.Size = new System.Drawing.Size(45, 46);
             this.strokeColorButton.TabIndex = 24;
             this.strokeColorButton.UseVisualStyleBackColor = true;
             this.strokeColorButton.Click += new System.EventHandler(this.strokeColorButton_Click);
@@ -247,24 +268,27 @@
             // 
             this.errorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.errorLabel.ForeColor = System.Drawing.Color.Red;
-            this.errorLabel.Location = new System.Drawing.Point(50, 356);
+            this.errorLabel.Location = new System.Drawing.Point(75, 548);
+            this.errorLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.errorLabel.Name = "errorLabel";
-            this.errorLabel.Size = new System.Drawing.Size(500, 20);
+            this.errorLabel.Size = new System.Drawing.Size(750, 31);
             this.errorLabel.TabIndex = 25;
             this.errorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(82, 317);
+            this.label9.Location = new System.Drawing.Point(123, 488);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(114, 13);
+            this.label9.Size = new System.Drawing.Size(171, 20);
             this.label9.TabIndex = 26;
             this.label9.Text = "Наситеност на цвета";
             // 
             // opacityUpDown
             // 
-            this.opacityUpDown.Location = new System.Drawing.Point(233, 310);
+            this.opacityUpDown.Location = new System.Drawing.Point(350, 477);
+            this.opacityUpDown.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.opacityUpDown.Maximum = new decimal(new int[] {
             255,
             0,
@@ -276,7 +300,7 @@
             0,
             0});
             this.opacityUpDown.Name = "opacityUpDown";
-            this.opacityUpDown.Size = new System.Drawing.Size(88, 20);
+            this.opacityUpDown.Size = new System.Drawing.Size(132, 26);
             this.opacityUpDown.TabIndex = 27;
             this.opacityUpDown.Value = new decimal(new int[] {
             100,
@@ -287,9 +311,9 @@
             // AddShape
             // 
             this.AcceptButton = this.addButton;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(588, 450);
+            this.ClientSize = new System.Drawing.Size(882, 692);
             this.Controls.Add(this.opacityUpDown);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.errorLabel);
@@ -313,6 +337,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "AddShape";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Добавяне на фигура";
