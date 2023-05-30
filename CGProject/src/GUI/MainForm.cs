@@ -125,6 +125,8 @@ namespace Draw
 
         }
 
+            
+
 
         /// <summary>
         /// Прихващане на координатите при натискането на бутон на мишката и проверка (в обратен ред) дали не е
@@ -710,6 +712,18 @@ namespace Draw
         {
             dialogProcessor.ShrinkPrimitive(1.1f);
             statusBar.Items[0].Text = "Последно действие: Промяна на размера на фигурата";
+            viewPort.Invalidate();
+        }
+
+        private void toolStripButton1_Click_1(object sender, EventArgs e)
+        {
+            int portHeigth = viewPort.Height - 100;
+            int portWidth = viewPort.Width - 100;
+
+            dialogProcessor.AddRandomShape0(portHeigth, portWidth);
+
+            statusBar.Items[0].Text = "Последно действие: Рисуване на шестоъгълник на произволно място на платното";
+
             viewPort.Invalidate();
         }
     }

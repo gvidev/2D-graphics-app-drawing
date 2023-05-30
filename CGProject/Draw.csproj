@@ -86,6 +86,7 @@
     <Compile Include="src\Model\HexagonShape.cs" />
     <Compile Include="src\Model\RectangleShape.cs" />
     <Compile Include="src\Model\Shape.cs" />
+    <Compile Include="src\Model\Shape0.cs" />
     <Compile Include="src\Model\TriangleShape.cs" />
     <Compile Include="src\Processors\DialogProcessor.cs" />
     <Compile Include="src\Processors\DisplayProcessor.cs" />

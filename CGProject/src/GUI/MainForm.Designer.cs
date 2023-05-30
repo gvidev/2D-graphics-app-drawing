@@ -74,8 +74,8 @@ namespace Draw
             this.setFillColor = new System.Windows.Forms.ToolStripButton();
             this.setStrokeColor = new System.Windows.Forms.ToolStripButton();
             this.rotateButton = new System.Windows.Forms.ToolStripButton();
-            this.scaleButton = new System.Windows.Forms.ToolStripButton();
             this.Shrink = new System.Windows.Forms.ToolStripButton();
+            this.scaleButton = new System.Windows.Forms.ToolStripButton();
             this.GroupSelectionBtn = new System.Windows.Forms.ToolStripButton();
             this.RemoveGroupBtn = new System.Windows.Forms.ToolStripButton();
             this.copyButton = new System.Windows.Forms.ToolStripButton();
@@ -92,6 +92,7 @@ namespace Draw
             this.searchSelectionTB = new System.Windows.Forms.TextBox();
             this.doubleBufferedPanel1 = new Draw.DoubleBufferedPanel();
             this.viewPort = new Draw.DoubleBufferedPanel();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.mainMenu.SuspendLayout();
             this.statusBar.SuspendLayout();
             this.speedMenu.SuspendLayout();
@@ -358,7 +359,8 @@ namespace Draw
             this.GroupSelectionBtn,
             this.RemoveGroupBtn,
             this.copyButton,
-            this.pasteButton});
+            this.pasteButton,
+            this.toolStripButton1});
             this.speedMenu.Location = new System.Drawing.Point(0, 24);
             this.speedMenu.Name = "speedMenu";
             this.speedMenu.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
@@ -483,6 +485,16 @@ namespace Draw
             this.rotateButton.ToolTipText = "Завъртане на избрания примитив";
             this.rotateButton.Click += new System.EventHandler(this.RotateButton_Click);
             // 
+            // Shrink
+            // 
+            this.Shrink.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Shrink.Image = ((System.Drawing.Image)(resources.GetObject("Shrink.Image")));
+            this.Shrink.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Shrink.Name = "Shrink";
+            this.Shrink.Size = new System.Drawing.Size(24, 24);
+            this.Shrink.Text = "Shrink the selected primitives";
+            this.Shrink.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
             // scaleButton
             // 
             this.scaleButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -493,16 +505,6 @@ namespace Draw
             this.scaleButton.Text = "toolStripButton1";
             this.scaleButton.ToolTipText = "Уголемяване или смаляване на избрания примитив";
             this.scaleButton.Click += new System.EventHandler(this.ScaleButton_Click);
-            // 
-            // Shrink
-            // 
-            this.Shrink.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.Shrink.Image = ((System.Drawing.Image)(resources.GetObject("Shrink.Image")));
-            this.Shrink.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.Shrink.Name = "Shrink";
-            this.Shrink.Size = new System.Drawing.Size(24, 24);
-            this.Shrink.Text = "Shrink the selected primitives";
-            this.Shrink.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // GroupSelectionBtn
             // 
@@ -656,6 +658,16 @@ namespace Draw
             this.viewPort.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ViewPortMouseMove);
             this.viewPort.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ViewPortMouseUp);
             // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(24, 24);
+            this.toolStripButton1.Text = "toolStripButton1";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click_1);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -753,5 +765,6 @@ namespace Draw
         private System.Windows.Forms.ToolStripMenuItem groupUnGroupToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cTRLGToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton Shrink;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }

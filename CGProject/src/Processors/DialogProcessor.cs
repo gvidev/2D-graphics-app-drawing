@@ -161,7 +161,22 @@ namespace Draw
             int x = rnd.Next(50, width);
             int y = rnd.Next(50, heigth);
 
-            HexagonShape hexagon = new HexagonShape(new Rectangle(x, y, 200, 180));
+            HexagonShape hexagon = new HexagonShape(new Rectangle(x, y, 150, 150));
+            hexagon.FillColor = Color.White;
+            hexagon.StrokeColor = Color.Black;
+            //just a random number that have so small probabillity to be same twice in our program
+            hexagon.ShapeName = "hexagon#" + new Random().Next();
+
+            ShapeList.Add(hexagon);
+        }
+
+        public void AddRandomShape0(int heigth, int width)
+        {
+            Random rnd = new Random();
+            int x = rnd.Next(50, width);
+            int y = rnd.Next(50, heigth);
+
+            Shape0 hexagon = new Shape0(new Rectangle(x, y, 200, 180));
             hexagon.FillColor = Color.White;
             hexagon.StrokeColor = Color.Black;
             //just a random number that have so small probabillity to be same twice in our program
